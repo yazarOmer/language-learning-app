@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { register, reset } from "../features/auth/authSlice.js";
+import Loading from "../components/Loading.jsx";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -8,13 +12,36 @@ const Register = () => {
         password: "",
     });
 
+    const { name, email, password } = formData;
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { user, isLoading, isError, isSuccess, message } = useSelector(
+        (state) => state.auth
+    );
+
+    useEffect(() => {
+        if (isSuccess || user) {
+            navigate("/learn");
+        }
+
+        dispatch(reset());
+    }, [isSuccess, user]);
+
     const onChangeHandler = (e) => {
         setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
     const submitHandler = () => {
-        console.log(formData);
+        const userData = { name, email, password };
+
+        dispatch(register(userData));
     };
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <div className="flex items-center justify-center h-screen w-screen">
