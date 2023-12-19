@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { logout, reset } from "../features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { logout, reset } from "../../features/auth/authSlice";
 
-const Learn = () => {
+const Admin = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const { user } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        if (user.isAdmin) {
-            navigate("/admin");
+        if (!user.isAdmin) {
+            navigate("/learn");
         }
     }, []);
 
@@ -22,10 +22,10 @@ const Learn = () => {
     };
     return (
         <div className="text-dark-text-white">
-            Learn
+            Admin
             <button onClick={logoutHandler}>logout</button>
         </div>
     );
 };
 
-export default Learn;
+export default Admin;

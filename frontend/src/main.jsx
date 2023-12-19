@@ -9,6 +9,8 @@ import Register from "./pages/Register.jsx";
 import { Provider } from "react-redux";
 import { store } from "./app/store.js";
 import Learn from "./pages/Learn.jsx";
+import Admin from "./pages/admin/admin.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
@@ -18,7 +20,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                     <Route path="/" element={<App />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/learn" element={<Learn />} />
+
+                    <Route path="" element={<PrivateRoute />}>
+                        <Route path="/learn" element={<Learn />} />
+                        <Route path="/admin" element={<Admin />} />
+                    </Route>
                 </Routes>
             </BrowserRouter>
         </Provider>
