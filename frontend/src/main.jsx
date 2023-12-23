@@ -11,6 +11,13 @@ import { store } from "./app/store.js";
 import Learn from "./pages/Learn.jsx";
 import Admin from "./pages/admin/admin.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
+import Practice from "./pages/Practice.jsx";
+import Leaderboard from "./pages/Leaderboard.jsx";
+import Shop from "./pages/Shop.jsx";
+import Profile from "./pages/Profile.jsx";
+import Sections from "./pages/Sections.jsx";
+import AddSection from "./pages/admin/AddSection.jsx";
+import AddUnit from "./pages/admin/AddUnit.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
@@ -24,6 +31,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                     <Route path="" element={<PrivateRoute />}>
                         <Route path="/learn" element={<Learn />} />
                         <Route path="/admin" element={<Admin />} />
+                        <Route path="/practice" element={<Practice />} />
+                        <Route path="/leaderboard" element={<Leaderboard />} />
+                        <Route path="/shop" element={<Shop />} />
+                        <Route path="/profile/:id" element={<Profile />} />
+                        <Route path="/sections" element={<Sections />} />
+                        <Route path="/admin/section" element={<AddSection />} />
+                        <Route path="/admin/unit" element={<AddUnit />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const Learn = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const { user } = useSelector((state) => state.auth);
 
@@ -15,17 +14,7 @@ const Learn = () => {
         }
     }, []);
 
-    const logoutHandler = async () => {
-        await dispatch(logout());
-        await dispatch(reset());
-        navigate("/");
-    };
-    return (
-        <div className="text-dark-text-white">
-            Learn
-            <button onClick={logoutHandler}>logout</button>
-        </div>
-    );
+    return <div className="text-dark-text-white">Learn</div>;
 };
 
 export default Learn;
