@@ -144,7 +144,7 @@ const AddUnit = () => {
                             >
                                 <svg
                                     id="fi_2976286"
-                                    enable-background="new 0 0 320.591 320.591"
+                                    enableBackground="new 0 0 320.591 320.591"
                                     height="512"
                                     viewBox="0 0 320.591 320.591"
                                     width="512"
