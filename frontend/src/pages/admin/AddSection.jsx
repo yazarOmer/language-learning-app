@@ -50,6 +50,7 @@ const AddSection = () => {
         dispatch(createSection(data));
         setName("");
         setColor("");
+        setImage("");
     };
 
     if (isLoading) {

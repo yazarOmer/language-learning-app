@@ -20,9 +20,9 @@ const getSection = asyncHandler(async (req, res) => {
 });
 
 const createSection = asyncHandler(async (req, res) => {
-    const { name, color } = req.body;
+    const { name, color, image } = req.body;
 
-    const section = await Section.create({ name, color });
+    const section = await Section.create({ name, color, image });
 
     if (section) {
         res.status(201).json({
@@ -30,6 +30,7 @@ const createSection = asyncHandler(async (req, res) => {
             name: section.name,
             units: section.units,
             color: section.color,
+            image: section.image,
         });
     } else {
         res.status(400);
