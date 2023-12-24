@@ -3,6 +3,7 @@ import sectionApi from "../../api/section/sectionApi";
 
 const initialState = {
     sections: [],
+    selectedSection: null,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -55,6 +56,9 @@ export const sectionSlice = createSlice({
             state.isSuccess = false;
             state.message = "";
         },
+        setSelectedSection: (state, action) => {
+            state.selectedSection = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -86,5 +90,5 @@ export const sectionSlice = createSlice({
     },
 });
 
-export const { reset } = sectionSlice.actions;
+export const { reset, setSelectedSection } = sectionSlice.actions;
 export default sectionSlice.reducer;

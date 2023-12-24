@@ -1,6 +1,17 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setSelectedSection, reset } from "../features/section/sectionSlice.js";
 
 const SectionCard = ({ section, index }) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleButton = (id) => {
+        dispatch(setSelectedSection(id));
+        navigate("/learn");
+    };
+
     return (
         <div
             className={`w-[600px] h-[200px] px-5 rounded-xl bg-[${section.color}] flex items-center justify-between`}
@@ -13,6 +24,7 @@ const SectionCard = ({ section, index }) => {
                     {section.units.length} Ünite
                 </h2>
                 <button
+                    onClick={() => handleButton(section._id)}
                     className={`bg-white px-4 py-2 rounded-xl mt-10 font-bold text-dark-bg-hover`}
                 >
                     Devam Et
