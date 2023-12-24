@@ -14,6 +14,10 @@ const sectionSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    image: {
+        type: String,
+        required: true,
+    },
 });
 
 const Section = mongoose.model("Section", sectionSchema);

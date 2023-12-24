@@ -10,16 +10,41 @@ const Header = () => {
     const { user } = useSelector((state) => state.auth);
 
     const userMenu = [
-        { title: "Öğren", to: "/learn", id: 1 },
-        { title: "Alıştırma Yap", to: "/practice", id: 2 },
-        { title: "Puan Tabloları", to: "/leaderboard", id: 3 },
-        { title: "Mağaza", to: "/shop", id: 4 },
-        { title: "Profil", to: `/profile/${user._id}`, id: 5 },
+        { title: "Öğren", logo: "/navMenu/home.svg", to: "/learn", id: 1 },
+        {
+            title: "Alıştırma Yap",
+            logo: "/navMenu/fitness.svg",
+            to: "/practice",
+            id: 2,
+        },
+        {
+            title: "Puan Tabloları",
+            logo: "/navMenu/leaderboard.svg",
+            to: "/leaderboard",
+            id: 3,
+        },
+        { title: "Mağaza", logo: "/navMenu/shop.svg", to: "/shop", id: 4 },
+        {
+            title: "Profil",
+            logo: "/navMenu/user.svg",
+            to: `/profile/${user._id}`,
+            id: 5,
+        },
     ];
 
     const adminMenu = [
-        { title: "Kısım Ekle", to: "/admin/section", id: 7 },
-        { title: "Ünite Ekle", to: "/admin/unit", id: 8 },
+        {
+            title: "Bölüm Ekle",
+            logo: "/navMenu/section.svg",
+            to: "/admin/section",
+            id: 7,
+        },
+        {
+            title: "Ünite Ekle",
+            logo: "/navMenu/unit.svg",
+            to: "/admin/unit",
+            id: 8,
+        },
     ];
 
     const logoutHandler = async () => {
@@ -40,17 +65,19 @@ const Header = () => {
                         to={item.to}
                         className={({ isActive }) =>
                             isActive
-                                ? "border-2 border-active-border w-full py-3.5 bg-light-blue/10 hover:bg-dark-bg-hover uppercase rounded-xl px-4 font-bold text-dark-text-white  text-sm"
-                                : "border-none w-full py-3.5 bg-transparent hover:bg-dark-bg-hover uppercase rounded-xl px-4 font-bold text-dark-text-white  text-sm"
+                                ? "border-2 border-active-border flex items-center gap-2 w-full py-3.5 bg-light-blue/10 hover:bg-dark-bg-hover uppercase rounded-xl px-4 font-bold text-dark-text-white  text-sm"
+                                : "border-none w-full py-3.5 bg-transparent flex items-center gap-2 hover:bg-dark-bg-hover uppercase rounded-xl px-4 font-bold text-dark-text-white  text-sm"
                         }
                     >
+                        <img src={item.logo} className="w-7 h-7" alt="logo" />
                         {item.title}
                     </NavLink>
                 ))}
                 <button
-                    className="border-none w-full py-3.5 bg-transparent hover:bg-dark-bg-hover uppercase rounded-xl text-left px-4 font-bold text-dark-text-white  text-sm"
+                    className="border-none w-full flex items-center gap-2 py-3.5 bg-transparent hover:bg-dark-bg-hover uppercase rounded-xl text-left px-4 font-bold text-dark-text-white  text-sm"
                     onClick={logoutHandler}
                 >
+                    <img src="/navMenu/logout.svg" className="w-7 h-7" alt="" />
                     logout
                 </button>
             </nav>

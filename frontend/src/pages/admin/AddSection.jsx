@@ -7,6 +7,7 @@ import Loading from "../../components/Loading.jsx";
 const AddSection = () => {
     const [name, setName] = useState("");
     const [color, setColor] = useState("");
+    const [image, setImage] = useState("");
 
     const { isLoading } = useSelector((state) => state.section);
 
@@ -24,8 +25,27 @@ const AddSection = () => {
         "#e29578",
     ];
 
+    const images = [
+        "/section/001.svg",
+        "/section/002.svg",
+        "/section/003.svg",
+        "/section/004.svg",
+        "/section/005.svg",
+        "/section/006.svg",
+        "/section/007.svg",
+        "/section/008.svg",
+        "/section/009.svg",
+        "/section/010.svg",
+        "/section/011.svg",
+        "/section/012.svg",
+        "/section/013.svg",
+        "/section/014.svg",
+        "/section/015.svg",
+        "/section/016.svg",
+    ];
+
     const submitHandler = () => {
-        const data = { name, color };
+        const data = { name, color, image };
 
         dispatch(createSection(data));
         setName("");
@@ -62,7 +82,7 @@ const AddSection = () => {
                         htmlFor="sectionName"
                         className="text-dark-text-title font-bold text-base mb-2"
                     >
-                        Colors
+                        Section Color
                     </label>
                     <div className="flex gap-2 flex-wrap">
                         {colors.map((item, i) => (
@@ -75,6 +95,30 @@ const AddSection = () => {
                                         : "outline-none border-none"
                                 } w-[50px] h-[50px] rounded-md bg-[${item}]`}
                             ></button>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="flex flex-col gap-2 flex-wrap mt-8">
+                    <label
+                        htmlFor="sectionImage"
+                        className="text-dark-text-title font-bold text-base mb-2"
+                    >
+                        Section İmage
+                    </label>
+                    <div className="flex gap-2 flex-wrap">
+                        {images.map((item, i) => (
+                            <button
+                                key={i}
+                                onClick={() => setImage(item)}
+                                className={`${
+                                    image == item
+                                        ? "outline outline-2 outline-offset-2 outline-white"
+                                        : "outline-none border-none"
+                                } w-[75px] h-[75px] flex items-center justify-center rounded-md`}
+                            >
+                                <img src={item} className="w-14 h-14" alt="" />
+                            </button>
                         ))}
                     </div>
                 </div>
