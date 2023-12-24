@@ -27,6 +27,24 @@ export const createSection = createAsyncThunk(
     }
 );
 
+export const getAllSections = createAsyncThunk(
+    "section/getAllSections",
+    async (_, thunkAPI) => {
+        try {
+            return await sectionApi.getAllSections();
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
 export const sectionSlice = createSlice({
     name: "section",
     initialState,
@@ -48,6 +66,19 @@ export const sectionSlice = createSlice({
                 state.isSuccess = true;
             })
             .addCase(createSection.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(getAllSections.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getAllSections.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.sections = action.payload;
+            })
+            .addCase(getAllSections.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;

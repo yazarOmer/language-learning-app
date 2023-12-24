@@ -10,8 +10,17 @@ const createSection = async (data) => {
     }
 };
 
+const getAllSections = async () => {
+    const response = await axios.get(API_URL + "all");
+
+    if (response.data) {
+        return response.data;
+    }
+};
+
 const sectionApi = {
     createSection,
+    getAllSections,
 };
 
 export default sectionApi;
