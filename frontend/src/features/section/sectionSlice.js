@@ -50,7 +50,7 @@ export const sectionSlice = createSlice({
     name: "section",
     initialState,
     reducers: {
-        reset: (state) => {
+        resetSection: (state) => {
             state.isError = false;
             state.isLoading = false;
             state.isSuccess = false;
@@ -90,5 +90,5 @@ export const sectionSlice = createSlice({
     },
 });
 
-export const { reset, setSelectedSection } = sectionSlice.actions;
+export const { resetSection, setSelectedSection } = sectionSlice.actions;
 export default sectionSlice.reducer;

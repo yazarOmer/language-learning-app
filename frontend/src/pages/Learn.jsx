@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { logout, reset } from "../features/auth/authSlice";
+import { logout, resetAuth } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 

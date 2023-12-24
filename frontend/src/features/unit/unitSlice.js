@@ -46,11 +46,11 @@ export const getAllUnits = createAsyncThunk(
     }
 );
 
-export const sectionSlice = createSlice({
+export const unitSlice = createSlice({
     name: "unit",
     initialState,
     reducers: {
-        reset: (state) => {
+        resetUnit: (state) => {
             state.isError = false;
             state.isLoading = false;
             state.isSuccess = false;
@@ -91,5 +91,5 @@ export const sectionSlice = createSlice({
     },
 });
 
-export const { reset, setSelectedUnit } = unitSlice.actions;
+export const { resetUnit, setSelectedUnit } = unitSlice.actions;
 export default unitSlice.reducer;

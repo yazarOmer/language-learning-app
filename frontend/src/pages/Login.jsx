@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login, reset } from "../features/auth/authSlice.js";
+import { login, resetAuth } from "../features/auth/authSlice.js";
 import Loading from "../components/Loading.jsx";
 
 const Login = () => {
@@ -21,7 +21,7 @@ const Login = () => {
             navigate("/sections");
         }
 
-        dispatch(reset());
+        dispatch(resetAuth());
     }, [isSuccess, user]);
 
     const onChangeHandler = (e) => {

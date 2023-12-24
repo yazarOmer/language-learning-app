@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import { createUnit, reset } from "../../features/unit/unitSlice.js";
-import { getAllSections, reset } from "../../features/section/sectionSlice.js";
+import { createUnit } from "../../features/unit/unitSlice.js";
+import {
+    getAllSections,
+    resetSection,
+} from "../../features/section/sectionSlice.js";
 import Loading from "../../components/Loading.jsx";
 
 const AddUnit = () => {
@@ -29,14 +32,18 @@ const AddUnit = () => {
         "#e29578",
     ];
 
+    const fetchSections = async () => {
+        await dispatch(getAllSections());
+        await dispatch(resetSection());
+    };
+
     useEffect(() => {
-        dispatch(getAllSections());
+        fetchSections();
     }, []);
 
     const submitHandler = () => {
         const data = { sectionId, name, guide, color };
-        console.log(sectionId, name, guide, color);
-        // dispatch(createUnit(data));
+        dispatch(createUnit(data));
         setSectionId("");
         setName("");
         setGuide([{ eng: "", tr: "", id: Math.random() }]);

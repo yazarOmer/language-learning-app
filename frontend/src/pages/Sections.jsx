@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllSections, reset } from "../features/section/sectionSlice.js";
+import {
+    getAllSections,
+    resetSection,
+} from "../features/section/sectionSlice.js";
 import SectionCard from "../components/SectionCard.jsx";
 import { useNavigate } from "react-router-dom";
 
@@ -22,7 +25,7 @@ const Sections = () => {
 
     const fetchSections = async () => {
         await dispatch(getAllSections());
-        await dispatch(reset());
+        await dispatch(resetSection());
     };
 
     useEffect(() => {

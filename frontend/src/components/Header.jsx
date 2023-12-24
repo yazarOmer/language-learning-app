@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { logout, reset } from "../features/auth/authSlice";
+import { logout, resetAuth } from "../features/auth/authSlice";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -49,7 +49,7 @@ const Header = () => {
 
     const logoutHandler = async () => {
         await dispatch(logout());
-        await dispatch(reset());
+        await dispatch(resetAuth());
         navigate("/");
     };
 

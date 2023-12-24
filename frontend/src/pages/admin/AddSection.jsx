@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { createSection, reset } from "../../features/section/sectionSlice.js";
+import {
+    createSection,
+    resetSection,
+} from "../../features/section/sectionSlice.js";
 import Loading from "../../components/Loading.jsx";
 
 const AddSection = () => {

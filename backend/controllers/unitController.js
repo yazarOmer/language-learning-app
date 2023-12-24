@@ -28,6 +28,7 @@ const createUnit = asyncHandler(async (req, res) => {
     if (unit) {
         const section = await Section.findById(sectionId);
         section.units.push(unit._id);
+        await section.save();
         res.status(201).json({
             _id: unit._id,
             sectionId: unit.sectionId,

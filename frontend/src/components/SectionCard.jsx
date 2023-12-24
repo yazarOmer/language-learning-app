@@ -1,7 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setSelectedSection, reset } from "../features/section/sectionSlice.js";
+import {
+    setSelectedSection,
+    resetSection,
+} from "../features/section/sectionSlice.js";
 
 const SectionCard = ({ section, index }) => {
     const dispatch = useDispatch();
