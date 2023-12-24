@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Unit from "../models/unitModel.js";
+import Section from "../models/sectionModel.js";
 
 const getAllUnits = asyncHandler(async (req, res) => {
     const units = await Unit.find({});
@@ -25,6 +26,8 @@ const createUnit = asyncHandler(async (req, res) => {
     const unit = await Unit.create({ sectionId, name, guide, color });
 
     if (unit) {
+        const section = await Section.findById(sectionId);
+        section.units.push(unit._id);
         res.status(201).json({
             _id: unit._id,
             sectionId: unit.sectionId,
