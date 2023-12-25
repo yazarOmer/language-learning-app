@@ -32,7 +32,7 @@ const Sections = () => {
         fetchSections();
     }, []);
     return (
-        <div className="w-[10%] mx-auto mt-5 flex flex-col gap-3">
+        <div className="flex-1 items-center mx-auto mt-5 flex flex-col gap-3">
             {sections.map((section, i) => (
                 <SectionCard key={i} section={section} index={i} />
             ))}

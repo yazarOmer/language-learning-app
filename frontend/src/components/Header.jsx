@@ -55,7 +55,7 @@ const Header = () => {
 
     const menu = user.isAdmin === true ? [...adminMenu] : [...userMenu];
     return (
-        <header className="flex flex-col border-r-2 py-6 px-3 border-dark-border h-screen w-[250px]">
+        <header className="fixed flex flex-col border-r-2 py-6 px-3 border-dark-border h-screen w-[250px]">
             <h1 className="font-bold text-3xl text-light-blue">LangEasy</h1>
 
             <nav className="mt-9 flex flex-col w-full gap-2">
