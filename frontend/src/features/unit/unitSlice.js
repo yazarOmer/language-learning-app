@@ -30,9 +30,9 @@ export const createUnit = createAsyncThunk(
 
 export const getAllUnits = createAsyncThunk(
     "unit/getAllUnits",
-    async (_, thunkAPI) => {
+    async (sectionId, thunkAPI) => {
         try {
-            return await unitApi.getAllUnits();
+            return await unitApi.getAllUnits(sectionId);
         } catch (error) {
             const message =
                 (error.response &&

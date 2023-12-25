@@ -6,7 +6,7 @@ import {
     createUnit,
 } from "../controllers/unitController.js";
 
-router.get("/all", getAllUnits);
+router.get("/all/:sectionId", getAllUnits);
 router.get("/:id", getUnit);
 router.post("/create", createUnit);
 

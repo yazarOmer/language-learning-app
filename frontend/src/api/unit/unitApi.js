@@ -10,8 +10,8 @@ const createUnit = async (data) => {
     }
 };
 
-const getAllUnits = async () => {
-    const response = await axios.get(API_URL + "all");
+const getAllUnits = async (sectionId) => {
+    const response = await axios.get(API_URL + "all/" + sectionId);
 
     if (response.data) {
         return response.data;

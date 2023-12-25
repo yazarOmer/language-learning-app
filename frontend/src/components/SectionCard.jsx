@@ -7,8 +7,9 @@ const SectionCard = ({ section, index }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleButton = (id) => {
-        dispatch(getSection(id));
+    const handleButton = async (id) => {
+        await dispatch(getSection(id));
+        await dispatch(resetSection());
         navigate("/learn");
     };
 
