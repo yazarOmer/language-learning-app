@@ -34,7 +34,7 @@ const Learn = () => {
     }
 
     return (
-        <div className="w-[10%] mx-auto mt-5 flex flex-col gap-3">
+        <div className="flex-1 items-center mx-auto mt-5 flex flex-col gap-3 ">
             <div className="w-[600px]  flex items-center py-5 border-b-2 border-dark-border">
                 <NavLink to="/sections">
                     <svg
