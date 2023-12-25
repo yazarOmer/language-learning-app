@@ -14,5 +14,15 @@ export default {
             },
         },
     },
+    safelist: [
+        "bg-[#2a9d8f]",
+        "bg-[#e9c46a]",
+        "bg-[#f4a261]",
+        "bg-[#e76f51]",
+        "bg-[#a8dadc]",
+        "bg-[#457b9d]",
+        "bg-[#edf6f9]",
+        "bg-[#e29578]",
+    ],
     plugins: [],
 };

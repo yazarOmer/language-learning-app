@@ -14,6 +14,16 @@ const getAllSections = async () => {
     const response = await axios.get(API_URL + "all");
 
     if (response.data) {
+        localStorage.setItem("sections", JSON.stringify(response.data));
+
+        return response.data;
+    }
+};
+
+const getSection = async (id) => {
+    const response = await axios.get(API_URL + id);
+
+    if (response.data) {
         return response.data;
     }
 };
@@ -21,6 +31,7 @@ const getAllSections = async () => {
 const sectionApi = {
     createSection,
     getAllSections,
+    getSection,
 };
 
 export default sectionApi;

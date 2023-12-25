@@ -22,7 +22,7 @@ const Learn = () => {
         return <Loading />;
     }
 
-    return <div className="text-dark-text-white">{selectedSection}</div>;
+    return <div className="text-dark-text-white">{selectedSection?.name}</div>;
 };
 
 export default Learn;

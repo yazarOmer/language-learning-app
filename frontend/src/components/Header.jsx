@@ -10,7 +10,7 @@ const Header = () => {
     const { user } = useSelector((state) => state.auth);
 
     const userMenu = [
-        { title: "Öğren", logo: "/navMenu/home.svg", to: "/learn", id: 1 },
+        { title: "Öğren", logo: "/navMenu/home.svg", to: "/sections", id: 1 },
         {
             title: "Alıştırma Yap",
             logo: "/navMenu/fitness.svg",
@@ -65,11 +65,15 @@ const Header = () => {
                         to={item.to}
                         className={({ isActive }) =>
                             isActive
-                                ? "border-2 border-active-border flex items-center gap-2 w-full py-3.5 bg-light-blue/10 hover:bg-dark-bg-hover uppercase rounded-xl px-4 font-bold text-dark-text-white  text-sm"
+                                ? "border-2 border-active-border flex items-center w-full py-3.5 bg-light-blue/10 hover:bg-dark-bg-hover uppercase rounded-xl px-4 font-bold text-dark-text-white  text-sm"
                                 : "border-none w-full py-3.5 bg-transparent flex items-center gap-2 hover:bg-dark-bg-hover uppercase rounded-xl px-4 font-bold text-dark-text-white  text-sm"
                         }
                     >
-                        <img src={item.logo} className="w-7 h-7" alt="logo" />
+                        <img
+                            src={item.logo}
+                            className="w-7 h-7 mr-5"
+                            alt="logo"
+                        />
                         {item.title}
                     </NavLink>
                 ))}

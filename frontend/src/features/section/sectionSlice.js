@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import sectionApi from "../../api/section/sectionApi";
 
+const sections = JSON.parse(localStorage.getItem("sections"));
+
 const initialState = {
     sections: [],
-    selectedSection: null,
+    selectedSection: sections ? sections[0] : null,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -46,6 +48,24 @@ export const getAllSections = createAsyncThunk(
     }
 );
 
+export const getSection = createAsyncThunk(
+    "section/getSection",
+    async (id, thunkAPI) => {
+        try {
+            return await sectionApi.getSection(id);
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
 export const sectionSlice = createSlice({
     name: "section",
     initialState,
@@ -55,9 +75,6 @@ export const sectionSlice = createSlice({
             state.isLoading = false;
             state.isSuccess = false;
             state.message = "";
-        },
-        setSelectedSection: (state, action) => {
-            state.selectedSection = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -86,9 +103,22 @@ export const sectionSlice = createSlice({
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
+            })
+            .addCase(getSection.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getSection.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.selectedSection = action.payload;
+            })
+            .addCase(getSection.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
             });
     },
 });
 
-export const { resetSection, setSelectedSection } = sectionSlice.actions;
+export const { resetSection } = sectionSlice.actions;
 export default sectionSlice.reducer;

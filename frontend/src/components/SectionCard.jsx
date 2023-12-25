@@ -1,17 +1,14 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-    setSelectedSection,
-    resetSection,
-} from "../features/section/sectionSlice.js";
+import { getSection, resetSection } from "../features/section/sectionSlice.js";
 
 const SectionCard = ({ section, index }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleButton = (id) => {
-        dispatch(setSelectedSection(id));
+        dispatch(getSection(id));
         navigate("/learn");
     };
 
