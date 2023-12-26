@@ -81,6 +81,7 @@ const AddUnit = () => {
                     <select
                         name="sectionId"
                         id="sectionId"
+                        value={sectionId}
                         onChange={(e) => setSectionId(e.target.value)}
                         className="p-2 bg-transparent border-2 rounded-md border-dark-border text-dark-text-white"
                     >
