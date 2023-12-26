@@ -4,7 +4,6 @@ import Section from "../models/sectionModel.js";
 
 const getAllUnits = asyncHandler(async (req, res) => {
     const { sectionId } = req.params;
-    console.log(sectionId);
     const units = await Unit.find({ sectionId });
 
     if (units) {
