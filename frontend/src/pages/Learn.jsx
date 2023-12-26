@@ -56,48 +56,6 @@ const Learn = () => {
             {units.map((unit, i) => (
                 <div key={i}>
                     <UnitCard unit={unit} />
-                    <p className="w-[600px]">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing
-                        elit. Porro nobis ad, corrupti ducimus velit quos dolor
-                        impedit optio odit beatae cum atque voluptates explicabo
-                        cumque ea, consequatur magnam aspernatur! Neque.
-                    </p>
-                    <p className="w-[600px]">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing
-                        elit. Porro nobis ad, corrupti ducimus velit quos dolor
-                        impedit optio odit beatae cum atque voluptates explicabo
-                        cumque ea, consequatur magnam aspernatur! Neque.
-                    </p>
-                    <p className="w-[600px]">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing
-                        elit. Porro nobis ad, corrupti ducimus velit quos dolor
-                        impedit optio odit beatae cum atque voluptates explicabo
-                        cumque ea, consequatur magnam aspernatur! Neque.
-                    </p>
-                    <p className="w-[600px]">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing
-                        elit. Porro nobis ad, corrupti ducimus velit quos dolor
-                        impedit optio odit beatae cum atque voluptates explicabo
-                        cumque ea, consequatur magnam aspernatur! Neque.
-                    </p>
-                    <p className="w-[600px]">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing
-                        elit. Porro nobis ad, corrupti ducimus velit quos dolor
-                        impedit optio odit beatae cum atque voluptates explicabo
-                        cumque ea, consequatur magnam aspernatur! Neque.
-                    </p>
-                    <p className="w-[600px]">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing
-                        elit. Porro nobis ad, corrupti ducimus velit quos dolor
-                        impedit optio odit beatae cum atque voluptates explicabo
-                        cumque ea, consequatur magnam aspernatur! Neque.
-                    </p>
-                    <p className="w-[600px]">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing
-                        elit. Porro nobis ad, corrupti ducimus velit quos dolor
-                        impedit optio odit beatae cum atque voluptates explicabo
-                        cumque ea, consequatur magnam aspernatur! Neque.
-                    </p>
                 </div>
             ))}
         </div>
