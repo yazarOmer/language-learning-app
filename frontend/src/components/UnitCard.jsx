@@ -1,25 +1,38 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { getUnit, resetUnit } from "../features/unit/unitSlice";
 
 const UnitCard = ({ unit }) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleClick = async (id) => {
+        await dispatch(getUnit(id));
+        await dispatch(resetUnit());
+        navigate(`/guide/${unit._id}`);
+    };
+
     return (
         <div
-            className={`w-[600px] h-[100px] px-5 rounded-xl bg-dark-border flex items-center justify-between`}
+            className={`w-[600px] h-[85px] px-5 rounded-xl bg-dark-border flex items-center justify-between`}
         >
             <h1 className="text-2xl text-dark-text-title font-bold">
                 {unit.name}
             </h1>
 
-            <button className="px-5 py-3 flex items-center gap-2 bg-dark-border border border-dark-text-white  text-dark-text-white font-bold rounded-2xl">
+            <button
+                onClick={() => handleClick(unit._id)}
+                className="px-5 py-3 flex items-center gap-2 bg-dark-border border border-dark-text-white  text-dark-text-white font-bold rounded-2xl"
+            >
                 <svg
                     className="w-6 h-6 fill-dark-text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
                     version="1.1"
                     id="fi_1545757"
                     x="0px"
                     y="0px"
                     viewBox="0 0 512 512"
-                    xml:space="preserve"
+                    xmlSpace="preserve"
                     width="512"
                     height="512"
                 >

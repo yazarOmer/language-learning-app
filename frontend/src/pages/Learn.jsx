@@ -54,8 +54,8 @@ const Learn = () => {
                 </h1>
             </div>
             {units.map((unit, i) => (
-                <>
-                    <UnitCard key={i} unit={unit} />
+                <div key={i}>
+                    <UnitCard unit={unit} />
                     <p className="w-[600px]">
                         Lorem ipsum dolor sit, amet consectetur adipisicing
                         elit. Porro nobis ad, corrupti ducimus velit quos dolor
@@ -98,7 +98,7 @@ const Learn = () => {
                         impedit optio odit beatae cum atque voluptates explicabo
                         cumque ea, consequatur magnam aspernatur! Neque.
                     </p>
-                </>
+                </div>
             ))}
         </div>
     );

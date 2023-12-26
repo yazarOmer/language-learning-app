@@ -18,9 +18,18 @@ const getAllUnits = async (sectionId) => {
     }
 };
 
+const getUnit = async (unitId) => {
+    const response = await axios.get(API_URL + unitId);
+
+    if (response.data) {
+        return response.data;
+    }
+};
+
 const unitApi = {
     createUnit,
     getAllUnits,
+    getUnit,
 };
 
 export default unitApi;

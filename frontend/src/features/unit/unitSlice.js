@@ -46,6 +46,24 @@ export const getAllUnits = createAsyncThunk(
     }
 );
 
+export const getUnit = createAsyncThunk(
+    "unit/getUnit",
+    async (unitId, thunkAPI) => {
+        try {
+            return await unitApi.getUnit(unitId);
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
 export const unitSlice = createSlice({
     name: "unit",
     initialState,
@@ -84,6 +102,19 @@ export const unitSlice = createSlice({
                 state.units = action.payload;
             })
             .addCase(getAllUnits.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(getUnit.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getUnit.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.selectedUnit = action.payload;
+            })
+            .addCase(getUnit.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
