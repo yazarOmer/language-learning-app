@@ -15,7 +15,7 @@ const quizSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    questions: [{ type: String, questionData: Object }],
+    questions: [{ questionType: String, questionData: Object }],
 });
 
 const Quiz = mongoose.model("Quiz", quizSchema);

@@ -18,6 +18,7 @@ import Profile from "./pages/Profile.jsx";
 import Sections from "./pages/Sections.jsx";
 import AddSection from "./pages/admin/AddSection.jsx";
 import AddUnit from "./pages/admin/AddUnit.jsx";
+import AddQuiz from "./pages/admin/AddQuiz.jsx";
 import Guide from "./pages/Guide.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -39,6 +40,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                         <Route path="/sections" element={<Sections />} />
                         <Route path="/admin/section" element={<AddSection />} />
                         <Route path="/admin/unit" element={<AddUnit />} />
+                        <Route path="/admin/quiz" element={<AddQuiz />} />
                         <Route path="/guide/:id" element={<Guide />} />
                     </Route>
                 </Routes>

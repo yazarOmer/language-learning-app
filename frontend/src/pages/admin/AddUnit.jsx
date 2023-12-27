@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { createUnit } from "../../features/unit/unitSlice.js";
 import {
     getAllSections,
@@ -18,7 +17,6 @@ const AddUnit = () => {
 
     const { isLoading, sections } = useSelector((state) => state.section);
 
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const colors = [

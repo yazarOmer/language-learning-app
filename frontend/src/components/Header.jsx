@@ -45,6 +45,12 @@ const Header = () => {
             to: "/admin/unit",
             id: 8,
         },
+        {
+            title: "Ders Ekle",
+            logo: "/navMenu/unit.svg",
+            to: "/admin/quiz",
+            id: 9,
+        },
     ];
 
     const logoutHandler = async () => {

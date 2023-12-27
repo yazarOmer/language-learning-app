@@ -4,7 +4,7 @@ import {
     getAllQuizzes,
     getQuiz,
     createQuiz,
-} from "../controllers/sectionController.js";
+} from "../controllers/quizController.js";
 
 router.get("/:sectionId", getAllQuizzes);
 router.get("/:id", getQuiz);
