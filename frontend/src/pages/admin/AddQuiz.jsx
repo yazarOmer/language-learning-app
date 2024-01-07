@@ -6,24 +6,20 @@ import {
 } from "../../features/section/sectionSlice.js";
 import { getAllUnits, resetUnit } from "../../features/unit/unitSlice";
 import Loading from "../../components/Loading.jsx";
-import WriteMissingWord from "../../components/WriteMissingWord.jsx";
-import WriteThisInTurkish from "../../components/WriteThisInTurkish.jsx";
-import TouchWhatYouHear from "../../components/TouchWhatYouHear.jsx";
+// import WriteMissingWord from "../../components/WriteMissingWord.jsx";
+// import WriteThisInTurkish from "../../components/WriteThisInTurkish.jsx";
+// import TouchWhatYouHear from "../../components/TouchWhatYouHear.jsx";
+import { createQuiz, resetQuiz } from "../../features/quiz/quizSlice.js";
 
 const AddQuiz = () => {
     const [sectionId, setSectionId] = useState("");
     const [unitId, setUnitId] = useState("");
     const [title, setTitle] = useState("");
-    const [questionType, setQuestionType] = useState("");
-    const [questions, setQuestions] = useState([]);
-
-    const [questionAnswer, setQuestionAnswer] = useState("");
-    const [questionWords, setQuestionWords] = useState([""]);
 
     const { isLoading, sections } = useSelector((state) => state.section);
     const { units } = useSelector((state) => state.unit);
 
-    const types = ["Eksik Sözcüğü Seç", "İşittiğine Dokun", "Bunu Türkçe Yaz"];
+    const data = { sectionId, unitId, title };
 
     const dispatch = useDispatch();
 
@@ -34,8 +30,9 @@ const AddQuiz = () => {
         }
     }, [sectionId]);
 
-    const submitHandler = () => {
-        console.log(sectionId, unitId, title, questionAnswer, questionWords);
+    const submitHandler = async () => {
+        await dispatch(createQuiz(data));
+        await resetQuiz();
     };
 
     if (isLoading) {
@@ -121,46 +118,6 @@ const AddQuiz = () => {
                     className="outline-none border-2 border-dark-border bg-transparent p-2 rounded-lg placeholder:text-dark-border text-dark-text-white font-semibold caret-dark-text-white"
                 />
             </div>
-
-            <div className="flex flex-col w-full mb-3 mt-2">
-                <label
-                    htmlFor="questionType"
-                    className="text-dark-text-title font-bold text-base mb-2"
-                >
-                    Soru Tipi Seç
-                </label>
-                <select
-                    name="questionType"
-                    id="questionType"
-                    value={questionType}
-                    onChange={(e) => setQuestionType(e.target.value)}
-                    className="p-2 bg-transparent border-2 rounded-md border-dark-border text-dark-text-white"
-                >
-                    <option value="" className=" bg-dark-bg">
-                        Soru Tipi Seç
-                    </option>
-                    {types.map((type, i) => (
-                        <option key={i} value={type} className=" bg-dark-bg">
-                            {type}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
-            {questionType !== "" && questionType == "Eksik Sözcüğü Seç" && (
-                <WriteMissingWord
-                    answer={questionAnswer}
-                    changeAnswer={setQuestionAnswer}
-                    words={questionWords}
-                    changeWords={setQuestionWords}
-                />
-            )}
-            {questionType !== "" && questionType == "İşittiğine Dokun" && (
-                <TouchWhatYouHear />
-            )}
-            {questionType !== "" && questionType == "Bunu Türkçe Yaz" && (
-                <WriteThisInTurkish />
-            )}
 
             <button
                 onClick={() => submitHandler()}

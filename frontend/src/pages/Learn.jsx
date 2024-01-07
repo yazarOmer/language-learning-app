@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { logout, resetAuth } from "../features/auth/authSlice";
 import { NavLink, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import { getAllUnits, resetUnit } from "../features/unit/unitSlice";
 import UnitCard from "../components/UnitCard";
+import { getAllQuizzes, resetQuiz } from "../features/quiz/quizSlice";
+import Quiz from "../components/Quiz";
 
 const Learn = () => {
     const navigate = useNavigate();
@@ -15,6 +16,8 @@ const Learn = () => {
 
     const { units, isLoading } = useSelector((state) => state.unit);
 
+    const { quizzes } = useSelector((state) => state.quiz);
+
     const sectionId = selectedSection._id;
 
     const fetchUnits = async (sectionId) => {
@@ -22,11 +25,17 @@ const Learn = () => {
         await dispatch(resetUnit());
     };
 
+    const fetchQuizzes = async (sectionId) => {
+        await dispatch(getAllQuizzes(sectionId));
+        await dispatch(resetQuiz());
+    };
+
     useEffect(() => {
         if (user.isAdmin) {
             navigate("/admin");
         }
         fetchUnits(sectionId);
+        fetchQuizzes(sectionId);
     }, []);
 
     if (isLoading) {
@@ -56,6 +65,18 @@ const Learn = () => {
             {units.map((unit, i) => (
                 <div key={i}>
                     <UnitCard unit={unit} />
+                    <div className="w-full flex flex-col  items-center">
+                        {quizzes
+                            .filter((quiz) => quiz.unitId == unit._id)
+                            .map((q, i) => (
+                                <Quiz
+                                    key={q._id}
+                                    quiz={q}
+                                    order={i}
+                                    color={unit.color}
+                                />
+                            ))}
+                    </div>
                 </div>
             ))}
         </div>
