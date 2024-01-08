@@ -29,6 +29,17 @@ const AddQuestion = () => {
         questionSentence,
         words,
     };
+    const submitHandler = async () => {
+        console.log(data);
+        dispatch(appendQuestion(data));
+        dispatch(resetQuiz());
+        setSectionId("");
+        setUnitId("");
+        setQuizId("");
+        setQuestionType("");
+        setQestionSentence("");
+        setWords([]);
+    };
 
     const dispatch = useDispatch();
 
@@ -44,17 +55,11 @@ const AddQuestion = () => {
         }
     }, [sectionId, unitId]);
 
-    const submitHandler = async () => {
-        console.log(data);
-        dispatch(appendQuestion(data));
-        dispatch(resetQuiz());
-    };
-
     if (isLoading) {
         return <Loading />;
     }
     return (
-        <div className="w-[600px] h-screen flex flex-col items-center justify-center mx-auto">
+        <div className="w-[600px] h-screen scroll-auto flex flex-col items-center justify-center mx-auto">
             <div className="flex flex-col w-full mb-3 mt-2">
                 <label
                     htmlFor="sectionId"
