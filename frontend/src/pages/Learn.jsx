@@ -5,7 +5,7 @@ import Loading from "../components/Loading";
 import { getAllUnits, resetUnit } from "../features/unit/unitSlice";
 import UnitCard from "../components/UnitCard";
 import { getAllQuizzes, resetQuiz } from "../features/quiz/quizSlice";
-import Quiz from "../components/Quiz";
+import QuizButton from "../components/QuizButton";
 
 const Learn = () => {
     const navigate = useNavigate();
@@ -69,7 +69,7 @@ const Learn = () => {
                         {quizzes
                             .filter((quiz) => quiz.unitId == unit._id)
                             .map((q, i) => (
-                                <Quiz
+                                <QuizButton
                                     key={q._id}
                                     quiz={q}
                                     order={i}
