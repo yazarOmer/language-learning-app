@@ -51,6 +51,12 @@ const Header = () => {
             to: "/admin/quiz",
             id: 9,
         },
+        {
+            title: "Soru Ekle",
+            logo: "/navMenu/unit.svg",
+            to: "/admin/question",
+            id: 10,
+        },
     ];
 
     const logoutHandler = async () => {

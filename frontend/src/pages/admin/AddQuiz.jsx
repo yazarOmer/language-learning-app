@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    getAllSections,
-    resetSection,
-} from "../../features/section/sectionSlice.js";
 import { getAllUnits, resetUnit } from "../../features/unit/unitSlice";
 import Loading from "../../components/Loading.jsx";
-// import WriteMissingWord from "../../components/WriteMissingWord.jsx";
-// import WriteThisInTurkish from "../../components/WriteThisInTurkish.jsx";
-// import TouchWhatYouHear from "../../components/TouchWhatYouHear.jsx";
 import { createQuiz, resetQuiz } from "../../features/quiz/quizSlice.js";
 
 const AddQuiz = () => {

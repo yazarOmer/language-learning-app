@@ -1,0 +1,186 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUnits, resetUnit } from "../../features/unit/unitSlice";
+import Loading from "../../components/Loading.jsx";
+import { getAllQuizzes, resetQuiz } from "../../features/quiz/quizSlice.js";
+import TouchWhatYouHear from "../../components/TouchWhatYouHear.jsx";
+import WriteMissingWord from "../../components/WriteMissingWord.jsx";
+import WriteThisInTurkish from "../../components/WriteThisInTurkish.jsx";
+
+const AddQuestion = () => {
+    const [sectionId, setSectionId] = useState("");
+    const [unitId, setUnitId] = useState("");
+    const [quizId, setQuizId] = useState("");
+    const [questionType, setQuestionType] = useState("");
+
+    const { isLoading, sections } = useSelector((state) => state.section);
+    const { units } = useSelector((state) => state.unit);
+    const { quizzes } = useSelector((state) => state.quiz);
+
+    const data = { sectionId, unitId, quizId };
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (sectionId !== "") {
+            dispatch(getAllUnits(sectionId));
+            dispatch(resetUnit());
+        }
+
+        if (unitId !== "") {
+            dispatch(getAllQuizzes(sectionId));
+            dispatch(resetQuiz());
+        }
+    }, [sectionId, unitId]);
+
+    const submitHandler = async () => {
+        await dispatch(createQuiz(data));
+        await resetQuiz();
+    };
+
+    if (isLoading) {
+        return <Loading />;
+    }
+    return (
+        <div className="w-[600px] h-screen flex flex-col items-center justify-center mx-auto">
+            <div className="flex flex-col w-full mb-3 mt-2">
+                <label
+                    htmlFor="sectionId"
+                    className="text-dark-text-title font-bold text-base mb-2"
+                >
+                    Bölüm Seç
+                </label>
+                <select
+                    name="sectionId"
+                    id="sectionId"
+                    value={sectionId}
+                    onChange={(e) => setSectionId(e.target.value)}
+                    className="p-2 bg-transparent border-2 rounded-md border-dark-border text-dark-text-white"
+                >
+                    <option value="" className=" bg-dark-bg">
+                        Bölüm Seç
+                    </option>
+                    {sections.map((section, i) => (
+                        <option
+                            key={i}
+                            value={section._id}
+                            className=" bg-dark-bg"
+                        >
+                            {section.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
+            {sectionId !== "" && (
+                <div className="flex flex-col w-full mb-3 mt-2">
+                    <label
+                        htmlFor="unitId"
+                        className="text-dark-text-title font-bold text-base mb-2"
+                    >
+                        Ünite Seç
+                    </label>
+                    <select
+                        name="unitId"
+                        id="unitId"
+                        value={unitId}
+                        onChange={(e) => setUnitId(e.target.value)}
+                        className="p-2 bg-transparent border-2 rounded-md border-dark-border text-dark-text-white"
+                    >
+                        <option value="" className=" bg-dark-bg">
+                            Ünite Seç
+                        </option>
+                        {units.map((unit, i) => (
+                            <option
+                                key={i}
+                                value={unit._id}
+                                className=" bg-dark-bg"
+                            >
+                                {unit.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            )}
+
+            {unitId !== "" && (
+                <div className="flex flex-col w-full mb-3 mt-2">
+                    <label
+                        htmlFor="unitId"
+                        className="text-dark-text-title font-bold text-base mb-2"
+                    >
+                        Ders Seç
+                    </label>
+                    <select
+                        name="unitId"
+                        id="unitId"
+                        value={quizId}
+                        onChange={(e) => setQuizId(e.target.value)}
+                        className="p-2 bg-transparent border-2 rounded-md border-dark-border text-dark-text-white"
+                    >
+                        <option value="" className=" bg-dark-bg">
+                            Ünite Seç
+                        </option>
+                        {quizzes
+                            .filter((q) => q.unitId == unitId)
+                            .map((quiz, i) => (
+                                <option
+                                    key={i}
+                                    value={quiz._id}
+                                    className=" bg-dark-bg"
+                                >
+                                    {quiz.title}
+                                </option>
+                            ))}
+                    </select>
+                </div>
+            )}
+
+            {quizId !== "" && (
+                <div className="flex flex-col w-full mb-3 mt-2">
+                    <label
+                        htmlFor="unitId"
+                        className="text-dark-text-title font-bold text-base mb-2"
+                    >
+                        Soru Tipi Seç
+                    </label>
+                    <select
+                        name="unitId"
+                        id="unitId"
+                        value={questionType}
+                        onChange={(e) => setQuestionType(e.target.value)}
+                        className="p-2 bg-transparent border-2 rounded-md border-dark-border text-dark-text-white"
+                    >
+                        <option value="" className=" bg-dark-bg">
+                            Soru Tip Seç
+                        </option>
+                        <option value="touchWhatYouHear" className="bg-dark-bg">
+                            İşittiğine Dokun
+                        </option>
+                        <option value="writeMissingWord" className="bg-dark-bg">
+                            Eksik Kelimeyi Yaz
+                        </option>
+                        <option
+                            value="writeThisInTurkish"
+                            className="bg-dark-bg"
+                        >
+                            Bunu Türkçe Yaz
+                        </option>
+                    </select>
+                </div>
+            )}
+
+            {questionType !== "" && questionType == "touchWhatYouHear" && (
+                <TouchWhatYouHear />
+            )}
+            {questionType !== "" && questionType == "writeMissingWord" && (
+                <WriteMissingWord />
+            )}
+            {questionType !== "" && questionType == "writeThisInTurkish" && (
+                <WriteThisInTurkish />
+            )}
+        </div>
+    );
+};
+
+export default AddQuestion;
