@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUnits, resetUnit } from "../../features/unit/unitSlice";
 import Loading from "../../components/Loading.jsx";
-import { getAllQuizzes, resetQuiz } from "../../features/quiz/quizSlice.js";
+import {
+    appendQuestion,
+    getAllQuizzes,
+    resetQuiz,
+} from "../../features/quiz/quizSlice.js";
 import TouchWhatYouHear from "../../components/TouchWhatYouHear.jsx";
 import WriteMissingWord from "../../components/WriteMissingWord.jsx";
 import WriteThisInTurkish from "../../components/WriteThisInTurkish.jsx";
@@ -12,12 +16,19 @@ const AddQuestion = () => {
     const [unitId, setUnitId] = useState("");
     const [quizId, setQuizId] = useState("");
     const [questionType, setQuestionType] = useState("");
+    const [questionSentence, setQestionSentence] = useState("");
+    const [words, setWords] = useState([]);
 
     const { isLoading, sections } = useSelector((state) => state.section);
     const { units } = useSelector((state) => state.unit);
     const { quizzes } = useSelector((state) => state.quiz);
 
-    const data = { sectionId, unitId, quizId };
+    const data = {
+        quizId,
+        questionType,
+        questionSentence,
+        words,
+    };
 
     const dispatch = useDispatch();
 
@@ -34,8 +45,9 @@ const AddQuestion = () => {
     }, [sectionId, unitId]);
 
     const submitHandler = async () => {
-        await dispatch(createQuiz(data));
-        await resetQuiz();
+        console.log(data);
+        dispatch(appendQuestion(data));
+        dispatch(resetQuiz());
     };
 
     if (isLoading) {
@@ -171,14 +183,36 @@ const AddQuestion = () => {
             )}
 
             {questionType !== "" && questionType == "touchWhatYouHear" && (
-                <TouchWhatYouHear />
+                <TouchWhatYouHear
+                    words={words}
+                    wordsChangeHandler={setWords}
+                    questionSentence={questionSentence}
+                    questionSentenceChange={setQestionSentence}
+                />
             )}
             {questionType !== "" && questionType == "writeMissingWord" && (
-                <WriteMissingWord />
+                <WriteMissingWord
+                    words={words}
+                    wordsChangeHandler={setWords}
+                    questionSentence={questionSentence}
+                    questionSentenceChange={setQestionSentence}
+                />
             )}
             {questionType !== "" && questionType == "writeThisInTurkish" && (
-                <WriteThisInTurkish />
+                <WriteThisInTurkish
+                    words={words}
+                    wordsChangeHandler={setWords}
+                    questionSentence={questionSentence}
+                    questionSentenceChange={setQestionSentence}
+                />
             )}
+
+            <button
+                onClick={submitHandler}
+                className="btn mt-5 w-full border border-light-blue hover:bg-light-blue text-dark-text-white"
+            >
+                Soru Ekle
+            </button>
         </div>
     );
 };

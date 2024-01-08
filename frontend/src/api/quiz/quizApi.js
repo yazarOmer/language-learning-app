@@ -26,10 +26,18 @@ const getQuiz = async (id) => {
     }
 };
 
+const appendQuestion = async (data) => {
+    const response = await axios.post(API_URL + "addQuestion", data);
+    if (response.data) {
+        return response.data;
+    }
+};
+
 const quizApi = {
     createQuiz,
     getAllQuizzes,
     getQuiz,
+    appendQuestion,
 };
 
 export default quizApi;

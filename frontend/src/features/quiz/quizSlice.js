@@ -28,6 +28,24 @@ export const createQuiz = createAsyncThunk(
     }
 );
 
+export const appendQuestion = createAsyncThunk(
+    "quiz/appendQuestion",
+    async (data, thunkAPI) => {
+        try {
+            return await quizApi.appendQuestion(data);
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
 export const getAllQuizzes = createAsyncThunk(
     "quiz/getAllQuizzes",
     async (sectionId, thunkAPI) => {
@@ -85,6 +103,18 @@ export const quizSlice = createSlice({
                 state.isSuccess = true;
             })
             .addCase(createQuiz.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(appendQuestion.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(appendQuestion.fulfilled, (state) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+            })
+            .addCase(appendQuestion.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
