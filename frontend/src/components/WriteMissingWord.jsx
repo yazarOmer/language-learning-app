@@ -106,7 +106,7 @@ const WriteMissingWord = ({ question, changeQuestion }) => {
                     className={`px-7 py-3 border-2 border-dark-border rounded-xl font-bold transition ${
                         answer == ""
                             ? "bg-dark-border text-dark-bg-hover"
-                            : "bg-[#58cc02] "
+                            : "bg-[#58cc02] border-none"
                     }`}
                 >
                     KONTROL ET
