@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-const WriteMissingWord = ({ question }) => {
+const WriteMissingWord = ({ question, changeQuestion }) => {
     const [answer, setAnswer] = useState("");
 
     const [utterance, setUtterance] = useState(null);
     const [voice, setVoice] = useState(null);
     const [pitch, setPitch] = useState(1);
     const [rate, setRate] = useState(1);
-    const [volume, setVolume] = useState(0.5);
+    const [volume, setVolume] = useState(1);
 
     const handlePlay = () => {
         const synth = window.speechSynthesis;
@@ -64,7 +64,7 @@ const WriteMissingWord = ({ question }) => {
             </h2>
 
             <div className="mt-16 ml-4 flex items-start">
-                <img src="/man.svg" className="w-24 h-24" />
+                <img src="/woman.svg" className="w-24 h-24" />
                 <button
                     onClick={() => handlePlay()}
                     className="p-3 ml-3 border-2 border-dark-border rounded-xl rounded-e-none"
@@ -96,7 +96,10 @@ const WriteMissingWord = ({ question }) => {
             </div>
 
             <div className=" flex justify-between mt-auto  items-center mb-2">
-                <button className="px-7 py-3 border-2 border-dark-border text-dark-border font-bold rounded-xl">
+                <button
+                    onClick={() => changeQuestion((prev) => prev + 1)}
+                    className="px-7 py-3 border-2 border-dark-border text-dark-border font-bold rounded-xl hover:bg-dark-border hover:text-dark-bg-hover transition"
+                >
                     GEÇ
                 </button>
                 <button

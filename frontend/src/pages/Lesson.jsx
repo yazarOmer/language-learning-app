@@ -27,7 +27,10 @@ const Lesson = () => {
         <div className="w-2/4 mx-auto  h-screen flex flex-col">
             <div className="py-16 ">Progress Bar</div>
             {questions[currentQuestion].questionType == "writeMissingWord" && (
-                <WriteMissingWord question={questions[currentQuestion]} />
+                <WriteMissingWord
+                    question={questions[currentQuestion]}
+                    changeQuestion={setCurrentQuestion}
+                />
             )}
         </div>
     );
