@@ -19,7 +19,6 @@ const getAllQuizzes = async (id) => {
 
 const getQuiz = async (id) => {
     const response = await axios.get(API_URL + "quiz/" + id);
-    console.log(id);
     if (response.data) {
         return response.data;
     }

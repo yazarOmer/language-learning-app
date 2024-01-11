@@ -1,8 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { getQuiz, resetQuiz } from "../features/quiz/quizSlice";
 
 const QuizButton = ({ quiz, order, color }) => {
     const [showCard, setShowCard] = useState(false);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const buttonHandle = async (id) => {
+        await dispatch(getQuiz(id));
+        await dispatch(resetQuiz());
+        navigate(`/lesson/${id}`);
+    };
 
     return (
         <div className="relative">
@@ -20,12 +31,12 @@ const QuizButton = ({ quiz, order, color }) => {
                         {quiz.title}
                     </h2>
 
-                    <Link
-                        to={`/lesson/${quiz._id}`}
+                    <button
+                        onClick={() => buttonHandle(quiz._id)}
                         className={`bg-dark-text-white w-full text-center py-2 rounded-lg font-bold `}
                     >
                         BAŞLA
-                    </Link>
+                    </button>
                 </div>
             )}
         </div>

@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getQuiz, resetQuiz } from "../features/quiz/quizSlice";
+import WriteMissingWord from "../components/WriteMissingWord";
 
 const Lesson = () => {
     const { id } = useParams();
@@ -13,11 +14,23 @@ const Lesson = () => {
         await dispatch(resetQuiz());
     };
 
+    const { questions } = useSelector((state) => state.quiz.selectedQuiz);
+
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [score, setScore] = useState(0);
+
     useEffect(() => {
         fetchQuiz(id);
     }, [id]);
 
-    return <div>{id}</div>;
+    return (
+        <div className="w-2/4 mx-auto  h-screen flex flex-col">
+            <div className="py-16 ">Progress Bar</div>
+            {questions[currentQuestion].questionType == "writeMissingWord" && (
+                <WriteMissingWord question={questions[currentQuestion]} />
+            )}
+        </div>
+    );
 };
 
 export default Lesson;
