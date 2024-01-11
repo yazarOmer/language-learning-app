@@ -8,7 +8,7 @@ import {
 } from "../controllers/quizController.js";
 
 router.get("/:sectionId", getAllQuizzes);
-router.get("/:id", getQuiz);
+router.get("/quiz/:id", getQuiz);
 router.post("/create", createQuiz);
 router.post("/addQuestion", appendQuestion);
 

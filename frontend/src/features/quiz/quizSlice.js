@@ -68,7 +68,7 @@ export const getQuiz = createAsyncThunk(
     "quiz/getQuiz",
     async (id, thunkAPI) => {
         try {
-            return await quizApi.getSection(id);
+            return await quizApi.getQuiz(id);
         } catch (error) {
             const message =
                 (error.response &&

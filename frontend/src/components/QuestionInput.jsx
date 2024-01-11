@@ -1,6 +1,6 @@
 import React from "react";
 
-const WriteMissingWord = ({
+const QuestionInput = ({
     questionSentence,
     questionSentenceChange,
     words,
@@ -101,4 +101,4 @@ const WriteMissingWord = ({
     );
 };
 
-export default WriteMissingWord;
+export default QuestionInput;

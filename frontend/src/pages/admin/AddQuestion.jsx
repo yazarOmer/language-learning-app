@@ -7,9 +7,7 @@ import {
     getAllQuizzes,
     resetQuiz,
 } from "../../features/quiz/quizSlice.js";
-import TouchWhatYouHear from "../../components/TouchWhatYouHear.jsx";
-import WriteMissingWord from "../../components/WriteMissingWord.jsx";
-import WriteThisInTurkish from "../../components/WriteThisInTurkish.jsx";
+import QuestionInput from "../../components/QuestionInput.jsx";
 
 const AddQuestion = () => {
     const [sectionId, setSectionId] = useState("");
@@ -187,24 +185,8 @@ const AddQuestion = () => {
                 </div>
             )}
 
-            {questionType !== "" && questionType == "touchWhatYouHear" && (
-                <TouchWhatYouHear
-                    words={words}
-                    wordsChangeHandler={setWords}
-                    questionSentence={questionSentence}
-                    questionSentenceChange={setQestionSentence}
-                />
-            )}
-            {questionType !== "" && questionType == "writeMissingWord" && (
-                <WriteMissingWord
-                    words={words}
-                    wordsChangeHandler={setWords}
-                    questionSentence={questionSentence}
-                    questionSentenceChange={setQestionSentence}
-                />
-            )}
-            {questionType !== "" && questionType == "writeThisInTurkish" && (
-                <WriteThisInTurkish
+            {questionType !== "" && (
+                <QuestionInput
                     words={words}
                     wordsChangeHandler={setWords}
                     questionSentence={questionSentence}

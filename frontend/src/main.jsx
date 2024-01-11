@@ -14,6 +14,8 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import Practice from "./pages/Practice.jsx";
 import Leaderboard from "./pages/Leaderboard.jsx";
 import Shop from "./pages/Shop.jsx";
+import Lesson from "./pages/Lesson.jsx";
+
 import Profile from "./pages/Profile.jsx";
 import Sections from "./pages/Sections.jsx";
 import AddSection from "./pages/admin/AddSection.jsx";
@@ -48,6 +50,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                         />
                         <Route path="/guide/:id" element={<Guide />} />
                     </Route>
+                    <Route path={`/lesson/:id`} element={<Lesson />} />
                 </Routes>
             </BrowserRouter>
         </Provider>
