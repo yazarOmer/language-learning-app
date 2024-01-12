@@ -107,7 +107,7 @@ const WriteThisInTurkish = ({
                 ))}
             </div>
 
-            <div className=" flex justify-between mt-auto  items-center mb-2">
+            <div className=" flex justify-between mt-auto items-center mb-2">
                 <button
                     onClick={() => changeQuestion((prev) => prev + 1)}
                     disabled={questionIndex == questionLength - 1}

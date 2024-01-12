@@ -8,7 +8,7 @@ const PrivateRoute = () => {
     return user ? (
         <div className="flex">
             <Header />
-            <div className="w-[calc(100%-850px)] absolute left-[250px] flex items-center">
+            <div className="w-[calc(100%-650px)] absolute left-[250px] flex items-center">
                 <Outlet />
             </div>
             <Sidebar />

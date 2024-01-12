@@ -17,6 +17,9 @@ const loginUser = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
+            gem: user.gem,
+            lifePoint: user.lifePoint,
+            point: user.point,
         });
     } else {
         res.status(400);
@@ -46,6 +49,9 @@ const registerUser = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
+            gem: user.gem,
+            lifePoint: user.lifePoint,
+            point: user.point,
         });
     } else {
         res.status(400);
