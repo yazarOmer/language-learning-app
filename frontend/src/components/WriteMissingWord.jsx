@@ -1,4 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+    decreaseLifePoint,
+    resetActions,
+} from "../features/actions/actionsSlice";
 
 const WriteMissingWord = ({
     question,
@@ -14,6 +19,7 @@ const WriteMissingWord = ({
     const [rate, setRate] = useState(1);
     const [volume, setVolume] = useState(1);
 
+    const dispatch = useDispatch();
     const handlePlay = () => {
         const synth = window.speechSynthesis;
 
@@ -59,6 +65,11 @@ const WriteMissingWord = ({
             });
         };
     }, [question.questionData.questionSentence]);
+
+    const checkHandle = async () => {
+        await dispatch(decreaseLifePoint());
+        await dispatch(resetAuth());
+    };
 
     return (
         <div className="p-10 flex flex-col h-screen">
@@ -110,6 +121,7 @@ const WriteMissingWord = ({
                 </button>
                 <button
                     disabled={answer == ""}
+                    onClick={() => checkHandle()}
                     className={`px-7 py-3 border-2 disabled:cursor-not-allowed border-dark-border rounded-xl font-bold transition ${
                         answer == ""
                             ? "bg-dark-border text-dark-bg-hover"

@@ -38,7 +38,7 @@ const QuestionInput = ({
                     id="answer"
                     value={questionSentence}
                     onChange={(e) => questionSentenceChange(e.target.value)}
-                    placeholder="Ders Adı"
+                    placeholder="Soru"
                     className="outline-none border-2 border-dark-border bg-transparent p-2 rounded-lg placeholder:text-dark-border text-dark-text-white font-semibold caret-dark-text-white"
                 />
             </div>

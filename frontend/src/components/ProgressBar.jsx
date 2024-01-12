@@ -2,7 +2,7 @@ import React from "react";
 
 const ProgressBar = ({ currentProgress, fullProgress }) => {
     return (
-        <div className="w-full bg-dark-border h-6 mt-16 rounded-full">
+        <div className="w-full bg-dark-border h-6  rounded-full">
             <div
                 style={{
                     width: `${Math.floor(

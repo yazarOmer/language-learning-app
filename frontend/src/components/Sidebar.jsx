@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const Sidebar = () => {
-    const { gem, lifePoint } = useSelector((state) => state.auth.user);
+    const { gem, lifePoint } = useSelector((state) => state.actions);
+    const [time, setTime] = useState(0);
+
+    useEffect(() => {}, []);
 
     return (
         <div className="fixed right-0 top-0 w-[400px] h-screen ml-auto flex flex-col border-l-2 py-6 px-3 border-dark-border">
@@ -20,6 +23,7 @@ const Sidebar = () => {
                     </span>
                 </div>
             </div>
+            <p>{time}</p>
         </div>
     );
 };

@@ -91,10 +91,21 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     res.status(200).json({ message: "Update user profile" });
 });
 
+const decreaseLifePoint = asyncHandler(async (req, res) => {
+    const id = req.user._id;
+    const user = await User.findById(id);
+
+    user.lifePoint -= 1;
+    await user.save();
+
+    res.status(200).json(user);
+});
+
 export {
     loginUser,
     registerUser,
     logoutUser,
     getUserProfile,
     updateUserProfile,
+    decreaseLifePoint,
 };
