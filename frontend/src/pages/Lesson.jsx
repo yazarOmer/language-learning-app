@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuiz, resetQuiz } from "../features/quiz/quizSlice";
 import WriteMissingWord from "../components/WriteMissingWord";
+import ProgressBar from "../components/ProgressBar";
 
 const Lesson = () => {
     const { id } = useParams();
@@ -25,7 +26,10 @@ const Lesson = () => {
 
     return (
         <div className="w-2/4 mx-auto  h-screen flex flex-col">
-            <div className="py-16 ">Progress Bar</div>
+            <ProgressBar
+                currentProgress={currentQuestion + 1}
+                fullProgress={questions.length}
+            />
             {questions[currentQuestion].questionType == "writeMissingWord" && (
                 <WriteMissingWord
                     question={questions[currentQuestion]}
