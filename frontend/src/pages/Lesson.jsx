@@ -5,6 +5,7 @@ import { getQuiz, resetQuiz } from "../features/quiz/quizSlice";
 import WriteMissingWord from "../components/WriteMissingWord";
 import ProgressBar from "../components/ProgressBar";
 import TouchWhatYouHear from "../components/TouchWhatYouHear";
+import WriteThisInTurkish from "../components/WriteThisInTurkish";
 
 const Lesson = () => {
     const { id } = useParams();
@@ -42,6 +43,15 @@ const Lesson = () => {
                 (questions[currentQuestion].questionType ==
                     "touchWhatYouHear" && (
                     <TouchWhatYouHear
+                        question={questions[currentQuestion]}
+                        changeQuestion={setCurrentQuestion}
+                        questionIndex={currentQuestion}
+                        questionLength={questions.length}
+                    />
+                )) ||
+                (questions[currentQuestion].questionType ==
+                    "writeThisInTurkish" && (
+                    <WriteThisInTurkish
                         question={questions[currentQuestion]}
                         changeQuestion={setCurrentQuestion}
                         questionIndex={currentQuestion}
