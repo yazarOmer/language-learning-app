@@ -3,8 +3,11 @@ import React from "react";
 const QuestionInput = ({
     questionSentence,
     questionSentenceChange,
+    questionType,
     words,
     wordsChangeHandler,
+    correctWord,
+    correctWordHandler,
 }) => {
     const handleInputChange = (e, i) => {
         const newInput = [...words];
@@ -30,7 +33,7 @@ const QuestionInput = ({
                     htmlFor="answer"
                     className="text-dark-text-title font-bold text-base mb-2"
                 >
-                    Soru Cevabı
+                    Soru Cümlesi
                 </label>
                 <input
                     type="text"
@@ -42,6 +45,46 @@ const QuestionInput = ({
                     className="outline-none border-2 border-dark-border bg-transparent p-2 rounded-lg placeholder:text-dark-border text-dark-text-white font-semibold caret-dark-text-white"
                 />
             </div>
+
+            {questionType == "writeMissingWord" && (
+                <div className="flex flex-col w-full mb-3 mt-2">
+                    <label
+                        htmlFor="answer"
+                        className="text-dark-text-title font-bold text-base mb-2"
+                    >
+                        Soru Cevabı
+                    </label>
+                    <input
+                        type="text"
+                        name="answer"
+                        id="answer"
+                        value={correctWord}
+                        onChange={(e) => correctWordHandler(e.target.value)}
+                        placeholder="Doğru cevap"
+                        className="outline-none border-2 border-dark-border bg-transparent p-2 rounded-lg placeholder:text-dark-border text-dark-text-white font-semibold caret-dark-text-white"
+                    />
+                </div>
+            )}
+
+            {questionType == "writeThisInTurkish" && (
+                <div className="flex flex-col w-full mb-3 mt-2">
+                    <label
+                        htmlFor="answer"
+                        className="text-dark-text-title font-bold text-base mb-2"
+                    >
+                        Soru Cevabı
+                    </label>
+                    <input
+                        type="text"
+                        name="answer"
+                        id="answer"
+                        value={correctWord}
+                        onChange={(e) => correctWordHandler(e.target.value)}
+                        placeholder="Doğru cevap"
+                        className="outline-none border-2 border-dark-border bg-transparent p-2 rounded-lg placeholder:text-dark-border text-dark-text-white font-semibold caret-dark-text-white"
+                    />
+                </div>
+            )}
 
             <div className="flex flex-col w-full mb-3 mt-2">
                 <label

@@ -101,6 +101,13 @@ const decreaseLifePoint = asyncHandler(async (req, res) => {
     res.status(200).json(user);
 });
 
+const getUserStats = asyncHandler(async (req, res) => {
+    const id = req.user._id;
+    const user = await User.findById(id);
+
+    res.status(200).json({ lifePoint: user.lifePoint, gem: user.gem });
+});
+
 export {
     loginUser,
     registerUser,
@@ -108,4 +115,5 @@ export {
     getUserProfile,
     updateUserProfile,
     decreaseLifePoint,
+    getUserStats,
 };

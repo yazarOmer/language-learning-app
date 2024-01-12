@@ -4,8 +4,8 @@ import actionsApi from "../../api/actions/actionsApi";
 const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = {
-    lifePoint: user ? user.lifePoint : null,
-    gem: user ? user.gem : null,
+    lifePoint: user ? user.lifePoint : 50,
+    gem: user ? user.gem : 50,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -17,6 +17,24 @@ export const decreaseLifePoint = createAsyncThunk(
     async (_, thunkAPI) => {
         try {
             return await actionsApi.decreaseLifePoint();
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
+export const getUserStats = createAsyncThunk(
+    "actions/getUserStats",
+    async (_, thunkAPI) => {
+        try {
+            return await actionsApi.getUserStats();
         } catch (error) {
             const message =
                 (error.response &&
@@ -52,6 +70,20 @@ export const actionsSlice = createSlice({
                 state.lifePoint -= 1;
             })
             .addCase(decreaseLifePoint.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(getUserStats.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getUserStats.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.lifePoint = action.payload.lifePoint;
+                state.gem = action.payload.gem;
+            })
+            .addCase(getUserStats.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;

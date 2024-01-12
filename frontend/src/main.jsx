@@ -23,6 +23,7 @@ import AddUnit from "./pages/admin/AddUnit.jsx";
 import AddQuiz from "./pages/admin/AddQuiz.jsx";
 import Guide from "./pages/Guide.jsx";
 import AddQuestion from "./pages/admin/AddQuestion.jsx";
+import AdminRoute from "./components/AdminRoute.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
@@ -33,7 +34,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
 
-                    <Route path="" element={<PrivateRoute />}>
+                    <Route path="" exact element={<PrivateRoute />}>
                         <Route path="/learn" element={<Learn />} />
                         <Route path="/admin" element={<Admin />} />
                         <Route path="/practice" element={<Practice />} />
@@ -41,6 +42,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                         <Route path="/shop" element={<Shop />} />
                         <Route path="/profile/:id" element={<Profile />} />
                         <Route path="/sections" element={<Sections />} />
+                        <Route path="/guide/:id" element={<Guide />} />
+                    </Route>
+
+                    <Route path="/admin" element={<AdminRoute />}>
                         <Route path="/admin/section" element={<AddSection />} />
                         <Route path="/admin/unit" element={<AddUnit />} />
                         <Route path="/admin/quiz" element={<AddQuiz />} />
@@ -48,7 +53,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                             path="/admin/question"
                             element={<AddQuestion />}
                         />
-                        <Route path="/guide/:id" element={<Guide />} />
                     </Route>
                     <Route path={`/lesson/:id`} element={<Lesson />} />
                 </Routes>

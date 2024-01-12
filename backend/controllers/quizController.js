@@ -39,12 +39,13 @@ const createQuiz = asyncHandler(async (req, res) => {
 });
 
 const appendQuestion = asyncHandler(async (req, res) => {
-    const { quizId, questionType, questionSentence, words } = req.body;
+    const { quizId, questionType, correctWord, questionSentence, words } =
+        req.body;
 
     const quiz = await Quiz.findById(quizId);
     await quiz.questions.push({
         questionType: questionType,
-        questionData: { questionSentence, words },
+        questionData: { questionSentence, words, correctWord },
     });
     await quiz.save();
     res.status(200).json(quiz);

@@ -7,6 +7,7 @@ import {
     getUserProfile,
     updateUserProfile,
     decreaseLifePoint,
+    getUserStats,
 } from "../controllers/userController.js";
 import { protect } from "../middlewares/authMiddleware.js";
 
@@ -16,5 +17,6 @@ router.post("/logout", logoutUser);
 router.get("/profile", protect, getUserProfile);
 router.put("/profile", protect, updateUserProfile);
 router.put("/decrease-life-point", protect, decreaseLifePoint);
+router.get("/getUserStats", protect, getUserStats);
 
 export default router;

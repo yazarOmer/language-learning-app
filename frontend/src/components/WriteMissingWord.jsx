@@ -4,6 +4,7 @@ import {
     decreaseLifePoint,
     resetActions,
 } from "../features/actions/actionsSlice";
+import { useNavigate } from "react-router-dom";
 
 const WriteMissingWord = ({
     question,
@@ -20,6 +21,8 @@ const WriteMissingWord = ({
     const [volume, setVolume] = useState(1);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const handlePlay = () => {
         const synth = window.speechSynthesis;
 
@@ -66,9 +69,27 @@ const WriteMissingWord = ({
         };
     }, [question.questionData.questionSentence]);
 
-    const checkHandle = async () => {
-        await dispatch(decreaseLifePoint());
-        await dispatch(resetAuth());
+    const checkAnswer = async () => {
+        if (
+            answer.toLowerCase() ==
+            question.questionData.correctWord.toLowerCase()
+        ) {
+            console.log("doğru cevap");
+            if (questionIndex == questionLength - 1) {
+                navigate("/learn");
+            } else {
+                changeQuestion((prev) => prev + 1);
+            }
+        } else {
+            console.log("yanlış cevap");
+            await dispatch(decreaseLifePoint());
+            await dispatch(resetActions());
+            if (questionIndex == questionLength - 1) {
+                navigate("/learn");
+            } else {
+                changeQuestion((prev) => prev + 1);
+            }
+        }
     };
 
     return (
@@ -121,7 +142,7 @@ const WriteMissingWord = ({
                 </button>
                 <button
                     disabled={answer == ""}
-                    onClick={() => checkHandle()}
+                    onClick={() => checkAnswer()}
                     className={`px-7 py-3 border-2 disabled:cursor-not-allowed border-dark-border rounded-xl font-bold transition ${
                         answer == ""
                             ? "bg-dark-border text-dark-bg-hover"

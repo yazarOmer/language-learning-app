@@ -1,4 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+    decreaseLifePoint,
+    resetActions,
+} from "../features/actions/actionsSlice";
 
 const TouchWhatYouHear = ({
     question,
@@ -14,6 +20,9 @@ const TouchWhatYouHear = ({
     const [pitch, setPitch] = useState(1);
     const [rate, setRate] = useState(1);
     const [volume, setVolume] = useState(1);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handlePlay = () => {
         const synth = window.speechSynthesis;
@@ -69,6 +78,29 @@ const TouchWhatYouHear = ({
     const removeAnswer = (word, i) => {
         setWords((prev) => [...prev, word]);
         answer.splice(i, 1);
+    };
+
+    const checkAnswer = async () => {
+        if (
+            answer.join(" ").toLowerCase() ==
+            question.questionData.questionSentence.toLowerCase()
+        ) {
+            console.log("doğru cevap");
+            if (questionIndex == questionLength - 1) {
+                navigate("/learn");
+            } else {
+                changeQuestion((prev) => prev + 1);
+            }
+        } else {
+            console.log("yanlış cevap");
+            await dispatch(decreaseLifePoint());
+            await dispatch(resetActions());
+            if (questionIndex == questionLength - 1) {
+                navigate("/learn");
+            } else {
+                changeQuestion((prev) => prev + 1);
+            }
+        }
     };
 
     return (
@@ -129,6 +161,7 @@ const TouchWhatYouHear = ({
                 </button>
                 <button
                     disabled={answer.length == 0}
+                    onClick={() => checkAnswer()}
                     className={`px-7 py-3 border-2 disabled:cursor-not-allowed border-dark-border rounded-xl font-bold transition ${
                         answer.length == 0
                             ? "bg-dark-border text-dark-bg-hover"

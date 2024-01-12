@@ -16,17 +16,14 @@ const AddQuestion = () => {
     const [questionType, setQuestionType] = useState("");
     const [questionSentence, setQestionSentence] = useState("");
     const [words, setWords] = useState([]);
+    const [correctWord, setCorrectWord] = useState("");
 
     const { isLoading, sections } = useSelector((state) => state.section);
     const { units } = useSelector((state) => state.unit);
     const { quizzes } = useSelector((state) => state.quiz);
 
-    const data = {
-        quizId,
-        questionType,
-        questionSentence,
-        words,
-    };
+    let data = { quizId, questionType, correctWord, questionSentence, words };
+
     const submitHandler = async () => {
         console.log(data);
         dispatch(appendQuestion(data));
@@ -188,6 +185,9 @@ const AddQuestion = () => {
             {questionType !== "" && (
                 <QuestionInput
                     words={words}
+                    questionType={questionType}
+                    correctWord={correctWord}
+                    correctWordHandler={setCorrectWord}
                     wordsChangeHandler={setWords}
                     questionSentence={questionSentence}
                     questionSentenceChange={setQestionSentence}

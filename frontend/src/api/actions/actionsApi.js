@@ -12,8 +12,17 @@ const decreaseLifePoint = async () => {
     return response.data;
 };
 
+const getUserStats = async () => {
+    const response = await axios.get(API_URL + "getUserStats");
+
+    if (response.data) {
+        return response.data;
+    }
+};
+
 const actionsApi = {
     decreaseLifePoint,
+    getUserStats,
 };
 
 export default actionsApi;
