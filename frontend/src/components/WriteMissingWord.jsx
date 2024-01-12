@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-const WriteMissingWord = ({ question, changeQuestion }) => {
+const WriteMissingWord = ({
+    question,
+    changeQuestion,
+    questionIndex,
+    questionLength,
+}) => {
     const [answer, setAnswer] = useState("");
 
     const [utterance, setUtterance] = useState(null);
@@ -98,12 +103,14 @@ const WriteMissingWord = ({ question, changeQuestion }) => {
             <div className=" flex justify-between mt-auto  items-center mb-2">
                 <button
                     onClick={() => changeQuestion((prev) => prev + 1)}
-                    className="px-7 py-3 border-2 border-dark-border text-dark-border font-bold rounded-xl hover:bg-dark-border hover:text-dark-bg-hover transition"
+                    disabled={questionIndex == questionLength - 1}
+                    className="px-7 py-3 border-2 disabled:cursor-not-allowed border-dark-border text-dark-border font-bold rounded-xl hover:bg-dark-border hover:text-dark-bg-hover transition"
                 >
                     GEÇ
                 </button>
                 <button
-                    className={`px-7 py-3 border-2 border-dark-border rounded-xl font-bold transition ${
+                    disabled={answer == ""}
+                    className={`px-7 py-3 border-2 disabled:cursor-not-allowed border-dark-border rounded-xl font-bold transition ${
                         answer == ""
                             ? "bg-dark-border text-dark-bg-hover"
                             : "bg-[#58cc02] border-none"

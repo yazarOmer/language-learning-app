@@ -34,6 +34,8 @@ const Lesson = () => {
                 <WriteMissingWord
                     question={questions[currentQuestion]}
                     changeQuestion={setCurrentQuestion}
+                    questionIndex={currentQuestion}
+                    questionLength={questions.length}
                 />
             )}
         </div>
