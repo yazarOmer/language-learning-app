@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getQuiz, resetQuiz } from "../features/quiz/quizSlice";
 import WriteMissingWord from "../components/WriteMissingWord";
 import ProgressBar from "../components/ProgressBar";
+import TouchWhatYouHear from "../components/TouchWhatYouHear";
 
 const Lesson = () => {
     const { id } = useParams();
@@ -27,17 +28,26 @@ const Lesson = () => {
     return (
         <div className="w-2/4 mx-auto  h-screen flex flex-col">
             <ProgressBar
-                currentProgress={currentQuestion + 1}
+                currentProgress={currentQuestion}
                 fullProgress={questions.length}
             />
-            {questions[currentQuestion].questionType == "writeMissingWord" && (
+            {(questions[currentQuestion].questionType == "writeMissingWord" && (
                 <WriteMissingWord
                     question={questions[currentQuestion]}
                     changeQuestion={setCurrentQuestion}
                     questionIndex={currentQuestion}
                     questionLength={questions.length}
                 />
-            )}
+            )) ||
+                (questions[currentQuestion].questionType ==
+                    "touchWhatYouHear" && (
+                    <TouchWhatYouHear
+                        question={questions[currentQuestion]}
+                        changeQuestion={setCurrentQuestion}
+                        questionIndex={currentQuestion}
+                        questionLength={questions.length}
+                    />
+                ))}
         </div>
     );
 };

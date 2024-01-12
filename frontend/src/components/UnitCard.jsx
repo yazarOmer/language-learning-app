@@ -23,7 +23,7 @@ const UnitCard = ({ unit }) => {
 
             <button
                 onClick={() => handleClick(unit._id)}
-                className={`px-5 py-3 flex items-center gap-2 bg-[${unit.color}] border border-dark-border  text-dark-text-white font-bold rounded-2xl`}
+                className={`px-5 py-3 flex items-center gap-2 bg-[${unit.color}] border-2 border-dark-text-white  text-dark-text-white font-bold rounded-2xl`}
             >
                 <svg
                     className="w-6 h-6 fill-dark-text-white"
