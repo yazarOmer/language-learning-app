@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import {
     decreaseLifePoint,
     resetActions,
+    updateUserPoint,
 } from "../features/actions/actionsSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -11,6 +12,8 @@ const WriteMissingWord = ({
     changeQuestion,
     questionIndex,
     questionLength,
+    score,
+    setScore,
 }) => {
     const [answer, setAnswer] = useState("");
 
@@ -75,16 +78,21 @@ const WriteMissingWord = ({
             question.questionData.correctWord.toLowerCase()
         ) {
             console.log("doğru cevap");
+            setScore((prev) => prev + 3);
             if (questionIndex == questionLength - 1) {
+                await dispatch(updateUserPoint({ score }));
+                await dispatch(resetActions());
                 navigate("/learn");
             } else {
                 changeQuestion((prev) => prev + 1);
             }
         } else {
-            console.log("yanlış cevap");
             await dispatch(decreaseLifePoint());
             await dispatch(resetActions());
+
             if (questionIndex == questionLength - 1) {
+                await dispatch(updateUserPoint({ score }));
+                await dispatch(resetActions());
                 navigate("/learn");
             } else {
                 changeQuestion((prev) => prev + 1);
@@ -96,7 +104,7 @@ const WriteMissingWord = ({
         <div className="p-10 flex flex-col h-screen">
             <h2 className="font-bold text-3xl text-dark-text-white">
                 {question.questionType == "writeMissingWord"
-                    ? "Eksik Kelimeyi Yaz"
+                    ? "Eksik Kelimeyi Yaz" + ` ${score}`
                     : ""}
             </h2>
 

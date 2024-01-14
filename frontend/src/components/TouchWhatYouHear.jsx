@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {
     decreaseLifePoint,
     resetActions,
+    updateUserPoint,
 } from "../features/actions/actionsSlice";
 
 const TouchWhatYouHear = ({
@@ -11,6 +12,8 @@ const TouchWhatYouHear = ({
     changeQuestion,
     questionIndex,
     questionLength,
+    score,
+    setScore,
 }) => {
     const [answer, setAnswer] = useState([]);
     const [words, setWords] = useState([...question.questionData.words]);
@@ -85,17 +88,21 @@ const TouchWhatYouHear = ({
             answer.join(" ").toLowerCase() ==
             question.questionData.questionSentence.toLowerCase()
         ) {
-            console.log("doğru cevap");
+            setScore((prev) => prev + 3);
+
             if (questionIndex == questionLength - 1) {
+                await dispatch(updateUserPoint({ score }));
+                await dispatch(resetActions());
                 navigate("/learn");
             } else {
                 changeQuestion((prev) => prev + 1);
             }
         } else {
-            console.log("yanlış cevap");
             await dispatch(decreaseLifePoint());
             await dispatch(resetActions());
             if (questionIndex == questionLength - 1) {
+                await dispatch(updateUserPoint({ score }));
+                await dispatch(resetActions());
                 navigate("/learn");
             } else {
                 changeQuestion((prev) => prev + 1);
@@ -107,7 +114,7 @@ const TouchWhatYouHear = ({
         <div className="p-10 flex flex-col h-screen">
             <h2 className="font-bold text-3xl text-dark-text-white">
                 {question.questionType == "touchWhatYouHear"
-                    ? "İşittiğine dokun"
+                    ? "İşittiğine dokun" + ` ${score}`
                     : ""}
             </h2>
 

@@ -61,6 +61,8 @@ const Lesson = () => {
                     changeQuestion={setCurrentQuestion}
                     questionIndex={currentQuestion}
                     questionLength={questions.length}
+                    score={score}
+                    setScore={setScore}
                 />
             )) ||
                 (questions[currentQuestion].questionType ==
@@ -70,6 +72,8 @@ const Lesson = () => {
                         changeQuestion={setCurrentQuestion}
                         questionIndex={currentQuestion}
                         questionLength={questions.length}
+                        score={score}
+                        setScore={setScore}
                     />
                 )) ||
                 (questions[currentQuestion].questionType ==
@@ -79,6 +83,8 @@ const Lesson = () => {
                         changeQuestion={setCurrentQuestion}
                         questionIndex={currentQuestion}
                         questionLength={questions.length}
+                        score={score}
+                        setScore={setScore}
                     />
                 ))}
         </div>

@@ -108,6 +108,20 @@ const getUserStats = asyncHandler(async (req, res) => {
     res.status(200).json({ lifePoint: user.lifePoint, gem: user.gem });
 });
 
+const updateUserPoint = asyncHandler(async (req, res) => {
+    const id = req.user._id;
+    const score = req.body.score;
+    console.log(req.body);
+    const user = await User.findById(id);
+    console.log(score);
+    user.point += score;
+    user.gem += score;
+
+    await user.save();
+
+    res.status(200).json({ lifePoint: user.lifePoint, gem: user.gem });
+});
+
 export {
     loginUser,
     registerUser,
@@ -116,4 +130,5 @@ export {
     updateUserProfile,
     decreaseLifePoint,
     getUserStats,
+    updateUserPoint,
 };

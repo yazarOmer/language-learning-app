@@ -43,7 +43,6 @@ const Sidebar = () => {
                     </span>
                 </div>
             </div>
-            <p>{time}</p>
         </div>
     );
 };

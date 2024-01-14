@@ -20,9 +20,18 @@ const getUserStats = async () => {
     }
 };
 
+const updateUserPoint = async (score) => {
+    const response = await axios.put(API_URL + "updateUserPoint", score);
+
+    if (response.data) {
+        return response.data;
+    }
+};
+
 const actionsApi = {
     decreaseLifePoint,
     getUserStats,
+    updateUserPoint,
 };
 
 export default actionsApi;
