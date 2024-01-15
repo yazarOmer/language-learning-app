@@ -104,6 +104,23 @@ export const getUsersByPoints = createAsyncThunk(
     }
 );
 
+export const getProfile = createAsyncThunk(
+    "actions/getProfile",
+    async (_, thunkAPI) => {
+        try {
+            return await actionsApi.getProfile();
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
 export const actionsSlice = createSlice({
     name: "actions",
     initialState,
@@ -188,6 +205,18 @@ export const actionsSlice = createSlice({
                 state.lifePoint = action.payload.lifePoint;
             })
             .addCase(buyLifePoint.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(getProfile.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getProfile.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+            })
+            .addCase(getProfile.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;

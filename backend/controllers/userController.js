@@ -74,12 +74,8 @@ const logoutUser = asyncHandler(async (req, res) => {
 // route: GET /api/users/profile
 // access: Private
 const getUserProfile = asyncHandler(async (req, res) => {
-    const user = {
-        name: req.user.name,
-        email: req.user.email,
-        point: req.user.point,
-        createdAt: req.user.createdAt,
-    };
+    const id = req.user._id;
+    const user = await User.findById(id).select("-password");
 
     res.status(200).json(user);
 });

@@ -44,12 +44,22 @@ const buyLifePoint = async () => {
     }
 };
 
+const getProfile = async () => {
+    const response = await axios.get(API_URL + "profile");
+
+    if (response.data) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+        return response.data;
+    }
+};
+
 const actionsApi = {
     decreaseLifePoint,
     getUserStats,
     updateUserPoint,
     getUsersByPoints,
     buyLifePoint,
+    getProfile,
 };
 
 export default actionsApi;
