@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
     decreaseLifePoint,
     resetActions,
     updateUserPoint,
+    updateScore,
 } from "../features/actions/actionsSlice";
 
 const TouchWhatYouHear = ({
@@ -17,6 +18,8 @@ const TouchWhatYouHear = ({
 }) => {
     const [answer, setAnswer] = useState([]);
     const [words, setWords] = useState([...question.questionData.words]);
+
+    const { currentScore } = useSelector((state) => state.actions);
 
     const [utterance, setUtterance] = useState(null);
     const [voice, setVoice] = useState(null);
@@ -88,10 +91,11 @@ const TouchWhatYouHear = ({
             answer.join(" ").toLowerCase() ==
             question.questionData.questionSentence.toLowerCase()
         ) {
-            setScore((prev) => prev + 3);
+            // setScore((prev) => prev + 3);
+            await dispatch(updateScore());
 
             if (questionIndex == questionLength - 1) {
-                await dispatch(updateUserPoint({ score }));
+                await dispatch(updateUserPoint({ score: currentScore }));
                 await dispatch(resetActions());
                 navigate("/learn");
             } else {
@@ -101,7 +105,7 @@ const TouchWhatYouHear = ({
             await dispatch(decreaseLifePoint());
             await dispatch(resetActions());
             if (questionIndex == questionLength - 1) {
-                await dispatch(updateUserPoint({ score }));
+                await dispatch(updateUserPoint({ score: currentScore }));
                 await dispatch(resetActions());
                 navigate("/learn");
             } else {
@@ -114,7 +118,7 @@ const TouchWhatYouHear = ({
         <div className="p-10 flex flex-col h-screen">
             <h2 className="font-bold text-3xl text-dark-text-white">
                 {question.questionType == "touchWhatYouHear"
-                    ? "İşittiğine dokun" + ` ${score}`
+                    ? "İşittiğine dokun"
                     : ""}
             </h2>
 

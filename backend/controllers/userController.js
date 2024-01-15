@@ -110,10 +110,8 @@ const getUserStats = asyncHandler(async (req, res) => {
 
 const updateUserPoint = asyncHandler(async (req, res) => {
     const id = req.user._id;
-    const score = req.body.score;
-    console.log(req.body);
     const user = await User.findById(id);
-    console.log(score);
+    const score = req.body.score;
     user.point += score;
     user.gem += score;
 

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     decreaseLifePoint,
     resetActions,
     updateUserPoint,
+    updateScore,
 } from "../features/actions/actionsSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -12,10 +13,10 @@ const WriteMissingWord = ({
     changeQuestion,
     questionIndex,
     questionLength,
-    score,
-    setScore,
 }) => {
     const [answer, setAnswer] = useState("");
+
+    const { currentScore } = useSelector((state) => state.actions);
 
     const [utterance, setUtterance] = useState(null);
     const [voice, setVoice] = useState(null);
@@ -78,9 +79,11 @@ const WriteMissingWord = ({
             question.questionData.correctWord.toLowerCase()
         ) {
             console.log("doğru cevap");
-            setScore((prev) => prev + 3);
+            await dispatch(updateScore());
+            // setScore((prev) => prev + 3);
             if (questionIndex == questionLength - 1) {
-                await dispatch(updateUserPoint({ score }));
+                console.log(currentScore);
+                await dispatch(updateUserPoint({ score: currentScore }));
                 await dispatch(resetActions());
                 navigate("/learn");
             } else {
@@ -91,7 +94,7 @@ const WriteMissingWord = ({
             await dispatch(resetActions());
 
             if (questionIndex == questionLength - 1) {
-                await dispatch(updateUserPoint({ score }));
+                await dispatch(updateUserPoint({ score: currentScore }));
                 await dispatch(resetActions());
                 navigate("/learn");
             } else {
@@ -104,7 +107,7 @@ const WriteMissingWord = ({
         <div className="p-10 flex flex-col h-screen">
             <h2 className="font-bold text-3xl text-dark-text-white">
                 {question.questionType == "writeMissingWord"
-                    ? "Eksik Kelimeyi Yaz" + ` ${score}`
+                    ? "Eksik Kelimeyi Yaz"
                     : ""}
             </h2>
 

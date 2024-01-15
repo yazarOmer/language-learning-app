@@ -6,6 +6,7 @@ const user = JSON.parse(localStorage.getItem("user"));
 const initialState = {
     lifePoint: user ? user.lifePoint : 50,
     gem: user ? user.gem : 50,
+    currentScore: 0,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -76,6 +77,12 @@ export const actionsSlice = createSlice({
             state.isSuccess = false;
             state.message = "";
         },
+        resetScore: (state) => {
+            state.currentScore = 0;
+        },
+        updateScore: (state) => {
+            state.currentScore += 3;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -114,6 +121,7 @@ export const actionsSlice = createSlice({
                 state.isSuccess = true;
                 state.lifePoint = action.payload.lifePoint;
                 state.gem = action.payload.gem;
+                state.currentScore = 0;
             })
             .addCase(updateUserPoint.rejected, (state, action) => {
                 state.isLoading = false;
@@ -123,5 +131,5 @@ export const actionsSlice = createSlice({
     },
 });
 
-export const { resetActions } = actionsSlice.actions;
+export const { resetActions, updateScore, resetScore } = actionsSlice.actions;
 export default actionsSlice.reducer;

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
     decreaseLifePoint,
     resetActions,
     updateUserPoint,
+    updateScore,
 } from "../features/actions/actionsSlice";
 
 const WriteThisInTurkish = ({
@@ -17,6 +18,8 @@ const WriteThisInTurkish = ({
 }) => {
     const [answer, setAnswer] = useState([]);
     const [words, setWords] = useState([...question.questionData.words]);
+
+    const { currentScore } = useSelector((state) => state.actions);
 
     const [utterance, setUtterance] = useState(null);
     const [voice, setVoice] = useState(null);
@@ -78,10 +81,11 @@ const WriteThisInTurkish = ({
             answer.join(" ").toLowerCase() ==
             question.questionData.correctWord.toLowerCase()
         ) {
-            setScore((prev) => prev + 3);
+            // setScore((prev) => prev + 3);
+            await dispatch(updateScore());
 
             if (questionIndex == questionLength - 1) {
-                await dispatch(updateUserPoint({ score }));
+                await dispatch(updateUserPoint({ score: currentScore }));
                 await dispatch(resetActions());
                 navigate("/learn");
             } else {
@@ -92,7 +96,7 @@ const WriteThisInTurkish = ({
             await dispatch(resetActions());
 
             if (questionIndex == questionLength - 1) {
-                await dispatch(updateUserPoint({ score }));
+                await dispatch(updateUserPoint({ score: currentScore }));
                 await dispatch(resetActions());
                 navigate("/learn");
             } else {
@@ -105,7 +109,7 @@ const WriteThisInTurkish = ({
         <div className="p-10 flex flex-col h-screen">
             <h2 className="font-bold text-3xl text-dark-text-white">
                 {question.questionType == "writeThisInTurkish"
-                    ? "Bunu Türkçe Yaz" + ` ${score}`
+                    ? "Bunu Türkçe Yaz"
                     : ""}
             </h2>
 
