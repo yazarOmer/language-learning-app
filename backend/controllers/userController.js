@@ -84,7 +84,27 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // route: PUT /api/users/profile
 // access: Private
 const updateUserProfile = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: "Update user profile" });
+    const id = req.user._id;
+    const { name, email } = req.body;
+
+    const user = await User.findByIdAndUpdate(
+        id,
+        { name, email },
+        { new: true }
+    );
+
+    if (user) {
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            gem: user.gem,
+            lifePoint: user.lifePoint,
+            point: user.point,
+            createdAt: user.createdAt,
+        });
+    }
 });
 
 const decreaseLifePoint = asyncHandler(async (req, res) => {

@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getProfile, resetActions } from "../features/actions/actionsSlice";
+import { updateUser, resetAuth } from "../features/auth/authSlice";
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -14,9 +15,19 @@ const Profile = () => {
         fetchProfile();
     }, []);
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    // const user = JSON.parse(localStorage.getItem("user"));
+    const { user } = useSelector((state) => state.auth);
 
     const date = new Date(user.createdAt).toLocaleDateString();
+
+    const [name, setName] = useState(user.name);
+    const [email, setEmail] = useState(user.email);
+
+    const submitHandler = async () => {
+        await dispatch(updateUser({ name, email }));
+        await dispatch(resetAuth());
+        fetchProfile();
+    };
 
     return (
         <div className="flex-1 items-center mx-auto mt-10 flex flex-col gap-3">
@@ -61,6 +72,49 @@ const Profile = () => {
                     </p>
                 </div>
             </div>
+
+            <div className="flex flex-col w-[60%] mb-3">
+                <label
+                    htmlFor="name"
+                    className="text-dark-text-title font-bold text-base mb-2"
+                >
+                    İsim
+                </label>
+                <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="İsim"
+                    className="outline-none border-2 border-dark-border bg-transparent p-2 rounded-lg placeholder:text-dark-border text-dark-text-white font-semibold caret-dark-text-white"
+                />
+            </div>
+
+            <div className="flex flex-col w-[60%] mb-3">
+                <label
+                    htmlFor="email"
+                    className="text-dark-text-title font-bold text-base mb-2"
+                >
+                    E-mail
+                </label>
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="email"
+                    className="outline-none border-2 border-dark-border bg-transparent p-2 rounded-lg placeholder:text-dark-border text-dark-text-white font-semibold caret-dark-text-white"
+                />
+            </div>
+
+            <button
+                onClick={() => submitHandler()}
+                className="btn w-[60%] bg-transparent border-2 border-light-blue hover:bg-light-blue  text-dark-text-white"
+            >
+                Kaydet
+            </button>
         </div>
     );
 };
