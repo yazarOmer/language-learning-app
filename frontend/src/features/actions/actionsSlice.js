@@ -50,6 +50,24 @@ export const updateUserPoint = createAsyncThunk(
     }
 );
 
+export const buyLifePoint = createAsyncThunk(
+    "actions/buyLifePoint",
+    async (_, thunkAPI) => {
+        try {
+            return await actionsApi.buyLifePoint();
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
 export const getUserStats = createAsyncThunk(
     "actions/getUserStats",
     async (_, thunkAPI) => {
@@ -156,6 +174,20 @@ export const actionsSlice = createSlice({
                 state.leaderboard = action.payload;
             })
             .addCase(getUsersByPoints.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(buyLifePoint.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(buyLifePoint.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.gem = action.payload.gem;
+                state.lifePoint = action.payload.lifePoint;
+            })
+            .addCase(buyLifePoint.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;

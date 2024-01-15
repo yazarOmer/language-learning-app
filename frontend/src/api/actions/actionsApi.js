@@ -36,11 +36,20 @@ const updateUserPoint = async (score) => {
     }
 };
 
+const buyLifePoint = async () => {
+    const response = await axios.put(API_URL + "buyLifePoint");
+
+    if (response.data) {
+        return response.data;
+    }
+};
+
 const actionsApi = {
     decreaseLifePoint,
     getUserStats,
     updateUserPoint,
     getUsersByPoints,
+    buyLifePoint,
 };
 
 export default actionsApi;
