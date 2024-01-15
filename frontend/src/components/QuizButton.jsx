@@ -1,18 +1,23 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getQuiz, resetQuiz } from "../features/quiz/quizSlice";
 
 const QuizButton = ({ quiz, order, color }) => {
     const [showCard, setShowCard] = useState(false);
+    const { lifePoint } = useSelector((state) => state.actions);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const buttonHandle = async (id) => {
-        await dispatch(getQuiz(id));
-        await dispatch(resetQuiz());
-        navigate(`/lesson/${id}`);
+        if (lifePoint == 0) {
+            console.log("can yok");
+        } else {
+            await dispatch(getQuiz(id));
+            await dispatch(resetQuiz());
+            navigate(`/lesson/${id}`);
+        }
     };
 
     return (

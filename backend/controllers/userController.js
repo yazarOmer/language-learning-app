@@ -120,6 +120,14 @@ const updateUserPoint = asyncHandler(async (req, res) => {
     res.status(200).json({ lifePoint: user.lifePoint, gem: user.gem });
 });
 
+const getUsersByPoints = asyncHandler(async (req, res) => {
+    const users = await User.find({ isAdmin: { $ne: true } }).sort({
+        point: -1,
+    });
+
+    res.status(200).json(users);
+});
+
 export {
     loginUser,
     registerUser,
@@ -129,4 +137,5 @@ export {
     decreaseLifePoint,
     getUserStats,
     updateUserPoint,
+    getUsersByPoints,
 };
