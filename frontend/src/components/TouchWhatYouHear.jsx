@@ -7,21 +7,20 @@ import {
     updateUserPoint,
     updateScore,
 } from "../features/actions/actionsSlice";
+import LifePointModal from "./LifePointModal";
 
 const TouchWhatYouHear = ({
     question,
     changeQuestion,
     questionIndex,
     questionLength,
-    score,
-    setScore,
 }) => {
     const [answer, setAnswer] = useState([]);
     const [words, setWords] = useState([...question.questionData.words]);
     const [isAnswerTrue, setIsAnswerTrue] = useState(false);
     const [isAnswerFalse, setIsAnswerFalse] = useState(false);
-
-    const { currentScore } = useSelector((state) => state.actions);
+    const [lp, setLp] = useState(true);
+    const { currentScore, lifePoint } = useSelector((state) => state.actions);
 
     const [utterance, setUtterance] = useState(null);
     const [voice, setVoice] = useState(null);
@@ -113,6 +112,10 @@ const TouchWhatYouHear = ({
             setIsAnswerTrue(false);
         }
     };
+
+    if (lifePoint == 0) {
+        return <LifePointModal />;
+    }
 
     return (
         <div className="p-10 flex flex-col h-screen">

@@ -7,6 +7,7 @@ import {
     updateScore,
 } from "../features/actions/actionsSlice";
 import { useNavigate } from "react-router-dom";
+import LifePointModal from "./LifePointModal";
 
 const WriteMissingWord = ({
     question,
@@ -18,7 +19,7 @@ const WriteMissingWord = ({
     const [isAnswerTrue, setIsAnswerTrue] = useState(false);
     const [isAnswerFalse, setIsAnswerFalse] = useState(false);
 
-    const { currentScore } = useSelector((state) => state.actions);
+    const { currentScore, lifePoint } = useSelector((state) => state.actions);
 
     const [utterance, setUtterance] = useState(null);
     const [voice, setVoice] = useState(null);
@@ -100,6 +101,10 @@ const WriteMissingWord = ({
             setIsAnswerTrue(false);
         }
     };
+
+    if (lifePoint == 0) {
+        return <LifePointModal />;
+    }
 
     return (
         <div className="p-10 flex flex-col h-screen">
