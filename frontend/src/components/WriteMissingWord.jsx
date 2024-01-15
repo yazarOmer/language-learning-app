@@ -15,6 +15,8 @@ const WriteMissingWord = ({
     questionLength,
 }) => {
     const [answer, setAnswer] = useState("");
+    const [isAnswerTrue, setIsAnswerTrue] = useState(false);
+    const [isAnswerFalse, setIsAnswerFalse] = useState(false);
 
     const { currentScore } = useSelector((state) => state.actions);
 
@@ -73,42 +75,36 @@ const WriteMissingWord = ({
         };
     }, [question.questionData.questionSentence]);
 
+    const updatePoint = async () => {
+        if (questionIndex == questionLength - 1) {
+            await dispatch(updateUserPoint({ score: currentScore }));
+            await dispatch(resetActions());
+            navigate("/learn");
+        } else {
+            changeQuestion((prev) => prev + 1);
+        }
+    };
+
     const checkAnswer = async () => {
         if (
             answer.toLowerCase() ==
             question.questionData.correctWord.toLowerCase()
         ) {
-            console.log("doğru cevap");
-            await dispatch(updateScore());
-            // setScore((prev) => prev + 3);
-            if (questionIndex == questionLength - 1) {
-                console.log(currentScore);
-                await dispatch(updateUserPoint({ score: currentScore }));
-                await dispatch(resetActions());
-                navigate("/learn");
-            } else {
-                changeQuestion((prev) => prev + 1);
-            }
+            dispatch(updateScore());
+            setIsAnswerTrue(true);
+            setIsAnswerFalse(false);
         } else {
             await dispatch(decreaseLifePoint());
             await dispatch(resetActions());
-
-            if (questionIndex == questionLength - 1) {
-                await dispatch(updateUserPoint({ score: currentScore }));
-                await dispatch(resetActions());
-                navigate("/learn");
-            } else {
-                changeQuestion((prev) => prev + 1);
-            }
+            setIsAnswerFalse(true);
+            setIsAnswerTrue(false);
         }
     };
 
     return (
         <div className="p-10 flex flex-col h-screen">
             <h2 className="font-bold text-3xl text-dark-text-white">
-                {question.questionType == "writeMissingWord"
-                    ? "Eksik Kelimeyi Yaz"
-                    : ""}
+                {"Eksik Kelimeyi Yaz" + ` ${currentScore}`}
             </h2>
 
             <div className="mt-16 ml-4 flex items-start">
@@ -143,26 +139,54 @@ const WriteMissingWord = ({
                 )}
             </div>
 
-            <div className=" flex justify-between mt-auto  items-center mb-2">
-                <button
-                    onClick={() => changeQuestion((prev) => prev + 1)}
-                    disabled={questionIndex == questionLength - 1}
-                    className="px-7 py-3 border-2 disabled:cursor-not-allowed border-dark-border text-dark-border font-bold rounded-xl hover:bg-dark-border hover:text-dark-bg-hover transition"
-                >
-                    GEÇ
-                </button>
-                <button
-                    disabled={answer == ""}
-                    onClick={() => checkAnswer()}
-                    className={`px-7 py-3 border-2 disabled:cursor-not-allowed border-dark-border rounded-xl font-bold transition ${
-                        answer == ""
-                            ? "bg-dark-border text-dark-bg-hover"
-                            : "bg-[#58cc02] border-none"
-                    }`}
-                >
-                    KONTROL ET
-                </button>
-            </div>
+            {isAnswerTrue && (
+                <div className=" flex justify-between mt-auto bg-[#58cc02] rounded-xl  items-center mb-2">
+                    <p className="text-dark-text-white font-bold ml-3">
+                        DOĞRU CEVAP
+                    </p>
+                    <button
+                        onClick={() => updatePoint()}
+                        className={`px-7 py-3 border-2 disabled:cursor-not-allowed border-dark-border rounded-xl font-bold transition `}
+                    >
+                        SONRAKİ SORU
+                    </button>
+                </div>
+            )}
+            {isAnswerFalse && (
+                <div className=" flex justify-between mt-auto bg-red-500 rounded-xl  items-center mb-2">
+                    <p className="text-dark-text-white font-bold ml-3">
+                        YANLIŞ CEVAP
+                    </p>
+                    <button
+                        onClick={() => updatePoint()}
+                        className={`px-7 py-3 border-2 disabled:cursor-not-allowed border-dark-border rounded-xl font-bold transition `}
+                    >
+                        SONRAKİ SORU
+                    </button>
+                </div>
+            )}
+            {!isAnswerFalse && !isAnswerTrue && (
+                <div className=" flex justify-between mt-auto  items-center mb-2">
+                    <button
+                        onClick={() => changeQuestion((prev) => prev + 1)}
+                        disabled={questionIndex == questionLength - 1}
+                        className="px-7 py-3 border-2 disabled:cursor-not-allowed border-dark-border text-dark-border font-bold rounded-xl hover:bg-dark-border hover:text-dark-bg-hover transition"
+                    >
+                        GEÇ
+                    </button>
+                    <button
+                        disabled={answer.length == 0}
+                        onClick={() => checkAnswer()}
+                        className={`px-7 py-3 border-2 disabled:cursor-not-allowed border-dark-border rounded-xl font-bold transition ${
+                            answer.length == 0
+                                ? "bg-dark-border text-dark-bg-hover"
+                                : "bg-[#58cc02] border-none"
+                        }`}
+                    >
+                        KONTROL ET
+                    </button>
+                </div>
+            )}
         </div>
     );
 };
