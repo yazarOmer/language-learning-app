@@ -11,6 +11,9 @@ import {
     updateUserPoint,
     getUsersByPoints,
     buyLifePoint,
+    appendMistake,
+    getMistakes,
+    deleteMistake,
 } from "../controllers/userController.js";
 import { protect } from "../middlewares/authMiddleware.js";
 
@@ -24,5 +27,8 @@ router.get("/getUserStats", protect, getUserStats);
 router.put("/updateUserPoint", protect, updateUserPoint);
 router.get("/getUsersByPoints", getUsersByPoints);
 router.put("/buyLifePoint", protect, buyLifePoint);
+router.put("/appendMistake", protect, appendMistake);
+router.get("/getMistakes", protect, getMistakes);
+router.put("/deleteMistake", protect, deleteMistake);
 
 export default router;

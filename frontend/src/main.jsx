@@ -24,6 +24,7 @@ import AddQuiz from "./pages/admin/AddQuiz.jsx";
 import Guide from "./pages/Guide.jsx";
 import AddQuestion from "./pages/admin/AddQuestion.jsx";
 import AdminRoute from "./components/AdminRoute.jsx";
+import Mistakes from "./pages/Mistakes.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
@@ -54,6 +55,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                             element={<AddQuestion />}
                         />
                     </Route>
+                    <Route path="/mistakes" element={<Mistakes />} />
                     <Route path={`/lesson/:id`} element={<Lesson />} />
                 </Routes>
             </BrowserRouter>

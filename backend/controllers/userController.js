@@ -20,6 +20,7 @@ const loginUser = asyncHandler(async (req, res) => {
             gem: user.gem,
             lifePoint: user.lifePoint,
             point: user.point,
+            mistakes: user.mistakes,
         });
     } else {
         res.status(400);
@@ -103,6 +104,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
             lifePoint: user.lifePoint,
             point: user.point,
             createdAt: user.createdAt,
+            mistakes: user.mistakes,
         });
     }
 });
@@ -155,6 +157,44 @@ const getUsersByPoints = asyncHandler(async (req, res) => {
     res.status(200).json(users);
 });
 
+const appendMistake = asyncHandler(async (req, res) => {
+    const id = req.user._id;
+    const { questionType, questionData } = req.body;
+
+    const user = await User.findById(id);
+    await user.mistakes.push({
+        questionType: questionType,
+        questionData: questionData,
+    });
+
+    await user.save();
+    res.status(200).json(user);
+});
+
+const getMistakes = asyncHandler(async (req, res) => {
+    const id = req.user._id;
+
+    const user = await User.findOne({ _id: id }, { mistakes: { $slice: 10 } });
+
+    res.status(200).json(user.mistakes);
+});
+
+const deleteMistake = asyncHandler(async (req, res) => {
+    const id = req.user._id;
+    const { questionId } = req.body;
+
+    const filtre = { _id: id };
+    const guncelleme = {
+        $pull: { mistakes: { _id: questionId } },
+    };
+
+    const sonuc = await User.updateOne(filtre, guncelleme);
+
+    if (sonuc) {
+        res.status(200).json(sonuc.mistakes);
+    }
+});
+
 export {
     loginUser,
     registerUser,
@@ -166,4 +206,7 @@ export {
     updateUserPoint,
     getUsersByPoints,
     buyLifePoint,
+    appendMistake,
+    getMistakes,
+    deleteMistake,
 };

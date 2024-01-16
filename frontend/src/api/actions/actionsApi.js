@@ -53,6 +53,30 @@ const getProfile = async () => {
     }
 };
 
+const appendMistake = async (data) => {
+    const response = await axios.put(API_URL + "appendMistake", data);
+
+    if (response.data) {
+        return response.data;
+    }
+};
+
+const getMistakes = async () => {
+    const response = await axios.get(API_URL + "getMistakes");
+
+    if (response.data) {
+        return response.data;
+    }
+};
+
+const deleteMistake = async (questionId) => {
+    const response = await axios.put(API_URL + "deleteMistake", { questionId });
+
+    if (response.data) {
+        return response.data;
+    }
+};
+
 const actionsApi = {
     decreaseLifePoint,
     getUserStats,
@@ -60,6 +84,9 @@ const actionsApi = {
     getUsersByPoints,
     buyLifePoint,
     getProfile,
+    appendMistake,
+    getMistakes,
+    deleteMistake,
 };
 
 export default actionsApi;

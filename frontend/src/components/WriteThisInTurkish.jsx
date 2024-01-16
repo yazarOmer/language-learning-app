@@ -6,6 +6,8 @@ import {
     resetActions,
     updateUserPoint,
     updateScore,
+    appendMistake,
+    deleteMistake,
 } from "../features/actions/actionsSlice";
 import LifePointModal from "./LifePointModal";
 
@@ -14,13 +16,16 @@ const WriteThisInTurkish = ({
     changeQuestion,
     questionIndex,
     questionLength,
+    isMistake,
 }) => {
     const [answer, setAnswer] = useState([]);
     const [words, setWords] = useState([...question.questionData.words]);
     const [isAnswerTrue, setIsAnswerTrue] = useState(false);
     const [isAnswerFalse, setIsAnswerFalse] = useState(false);
 
-    const { currentScore, lifePoint } = useSelector((state) => state.actions);
+    const { currentScore, lifePoint, mistakes } = useSelector(
+        (state) => state.actions
+    );
 
     const [utterance, setUtterance] = useState(null);
     const [voice, setVoice] = useState(null);
@@ -78,10 +83,17 @@ const WriteThisInTurkish = ({
     };
 
     const updatePoint = async () => {
-        if (questionIndex == questionLength - 1) {
+        if (
+            questionIndex == questionLength - 1 ||
+            (isMistake && mistakes.length == 0)
+        ) {
             await dispatch(updateUserPoint({ score: currentScore }));
             await dispatch(resetActions());
-            navigate("/learn");
+            if (isMistake) {
+                navigate("/practice");
+            } else {
+                navigate("/learn");
+            }
         } else {
             changeQuestion((prev) => prev + 1);
         }
@@ -93,9 +105,18 @@ const WriteThisInTurkish = ({
             question.questionData.correctWord.toLowerCase()
         ) {
             dispatch(updateScore());
+            {
+                isMistake ? await dispatch(deleteMistake(question._id)) : null;
+            }
             setIsAnswerTrue(true);
             setIsAnswerFalse(false);
         } else {
+            {
+                !isMistake ? await dispatch(appendMistake(question)) : null;
+            }
+            {
+                !isMistake ? await dispatch(resetActions()) : null;
+            }
             await dispatch(decreaseLifePoint());
             await dispatch(resetActions());
             setIsAnswerFalse(true);
@@ -110,7 +131,7 @@ const WriteThisInTurkish = ({
     return (
         <div className="p-10 flex flex-col h-screen">
             <h2 className="font-bold text-3xl text-dark-text-white">
-                {"Bunu Türkçe Yaz" + ` ${currentScore}`}
+                {"Bunu Türkçe Yaz"}
             </h2>
 
             <div className="mt-16 ml-4 flex items-start">

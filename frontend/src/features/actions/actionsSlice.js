@@ -7,6 +7,7 @@ const initialState = {
     lifePoint: user ? user.lifePoint : 50,
     gem: user ? user.gem : 50,
     currentScore: 0,
+    mistakes: [],
     leaderboard: [],
     isError: false,
     isSuccess: false,
@@ -37,6 +38,24 @@ export const updateUserPoint = createAsyncThunk(
     async (score, thunkAPI) => {
         try {
             return await actionsApi.updateUserPoint(score);
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
+export const appendMistake = createAsyncThunk(
+    "actions/appendMistake",
+    async (data, thunkAPI) => {
+        try {
+            return await actionsApi.appendMistake(data);
         } catch (error) {
             const message =
                 (error.response &&
@@ -91,6 +110,42 @@ export const getUsersByPoints = createAsyncThunk(
     async (_, thunkAPI) => {
         try {
             return await actionsApi.getUsersByPoints();
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
+export const getMistakes = createAsyncThunk(
+    "actions/getMistakes",
+    async (_, thunkAPI) => {
+        try {
+            return await actionsApi.getMistakes();
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
+export const deleteMistake = createAsyncThunk(
+    "actions/deleteMistake",
+    async (questionId, thunkAPI) => {
+        try {
+            return await actionsApi.deleteMistake(questionId);
         } catch (error) {
             const message =
                 (error.response &&
@@ -217,6 +272,46 @@ export const actionsSlice = createSlice({
                 state.isSuccess = true;
             })
             .addCase(getProfile.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(getMistakes.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getMistakes.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.mistakes = action.payload;
+            })
+            .addCase(getMistakes.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(deleteMistake.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(deleteMistake.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.mistakes = state.mistakes.filter(
+                    (mis) => mis._id !== action.meta.arg
+                );
+            })
+            .addCase(deleteMistake.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(appendMistake.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(appendMistake.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+            })
+            .addCase(appendMistake.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;

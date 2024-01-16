@@ -36,6 +36,7 @@ const userSchema = mongoose.Schema(
             required: true,
             default: 0,
         },
+        mistakes: [{ questionType: String, questionData: Object }],
     },
     {
         timestamps: true,
