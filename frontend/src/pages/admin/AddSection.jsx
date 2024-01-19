@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -6,25 +6,28 @@ import {
     resetSection,
 } from "../../features/section/sectionSlice.js";
 import Loading from "../../components/Loading.jsx";
+import { toast } from "react-toastify";
 
 const AddSection = () => {
     const [name, setName] = useState("");
     const [color, setColor] = useState("");
     const [image, setImage] = useState("");
 
-    const { isLoading } = useSelector((state) => state.section);
+    const { isLoading, isSuccess, isError } = useSelector(
+        (state) => state.section
+    );
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const colors = [
-        "#2a9d8f",
-        "#e9c46a",
-        "#f4a261",
-        "#e76f51",
-        "#a8dadc",
-        "#457b9d",
-        "#edf6f9",
+        "#222831",
+        "#393E46",
+        "#8785A2",
+        "#3F72AF",
+        "#AA96DA",
+        "#3282B8",
+        "#E84545",
         "#e29578",
     ];
 
@@ -47,10 +50,21 @@ const AddSection = () => {
         "/section/016.svg",
     ];
 
-    const submitHandler = () => {
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success("Bölüm başarıyla eklendi");
+        }
+        if (isError) {
+            toast.error("Bölüm eklenemedi");
+        }
+    }, [isSuccess, isError]);
+
+    const submitHandler = async () => {
         const data = { name, color, image };
 
-        dispatch(createSection(data));
+        await dispatch(createSection(data));
+
+        await dispatch(resetSection());
         setName("");
         setColor("");
         setImage("");

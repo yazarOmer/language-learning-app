@@ -4,6 +4,7 @@ import quizApi from "../../api/quiz/quizApi";
 const initialState = {
     quizzes: [],
     selectedQuiz: null,
+    currentQuestion: 0,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -91,6 +92,10 @@ export const quizSlice = createSlice({
             state.isLoading = false;
             state.isSuccess = false;
             state.message = "";
+            state.currentQuestion = 0;
+        },
+        increaseCurrentQuestion: (state) => {
+            state.currentQuestion += 1;
         },
     },
     extraReducers: (builder) => {
@@ -148,5 +153,5 @@ export const quizSlice = createSlice({
     },
 });
 
-export const { resetQuiz } = quizSlice.actions;
+export const { resetQuiz, increaseCurrentQuestion } = quizSlice.actions;
 export default quizSlice.reducer;

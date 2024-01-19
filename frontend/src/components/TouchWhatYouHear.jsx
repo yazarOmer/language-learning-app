@@ -9,24 +9,34 @@ import {
     appendMistake,
     deleteMistake,
 } from "../features/actions/actionsSlice";
+import { increaseCurrentQuestion } from "../features/quiz/quizSlice";
 import LifePointModal from "./LifePointModal";
 import { toast } from "react-toastify";
+import Loading from "./Loading";
 
 const TouchWhatYouHear = ({
     question,
-    changeQuestion,
     questionIndex,
     questionLength,
     isMistake,
+    setCurrentQuestion,
 }) => {
-    const [answer, setAnswer] = useState([]);
-    const [words, setWords] = useState([...question.questionData.words]);
-    const [isAnswerTrue, setIsAnswerTrue] = useState(false);
-    const [isAnswerFalse, setIsAnswerFalse] = useState(false);
-    const [lp, setLp] = useState(true);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const { currentScore, lifePoint, mistakes } = useSelector(
         (state) => state.actions
     );
+
+    const { questions } = useSelector((state) => state.quiz.selectedQuiz);
+    const { isLoading } = useSelector((state) => state.quiz);
+
+    const [answer, setAnswer] = useState([]);
+    const [words, setWords] = useState([
+        ...questions[questionIndex].questionData.words,
+    ]);
+    const [isAnswerTrue, setIsAnswerTrue] = useState(false);
+    const [isAnswerFalse, setIsAnswerFalse] = useState(false);
 
     const [utterance, setUtterance] = useState(null);
     const [voice, setVoice] = useState(null);
@@ -34,12 +44,8 @@ const TouchWhatYouHear = ({
     const [rate, setRate] = useState(1);
     const [volume, setVolume] = useState(1);
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
     const handlePlay = () => {
         const synth = window.speechSynthesis;
-
         utterance.voice = voice;
         utterance.pitch = pitch;
         utterance.rate = rate;
@@ -49,7 +55,6 @@ const TouchWhatYouHear = ({
 
     const handleSlowPlay = () => {
         const synth = window.speechSynthesis;
-
         utterance.voice = voice;
         utterance.pitch = pitch;
         utterance.rate = 0.3;
@@ -80,8 +85,12 @@ const TouchWhatYouHear = ({
             synth.removeEventListener("voiceschanged", () => {
                 setVoice(voices[4]);
             });
+            setAnswer([]);
+            setWords([...questions[questionIndex + 1].questionData.words]);
+            setIsAnswerFalse(false);
+            setIsAnswerTrue(false);
         };
-    }, [question.questionData.questionSentence]);
+    }, [question]);
 
     const addAnswer = (word, i) => {
         setAnswer((prev) => [...prev, word]);
@@ -107,7 +116,7 @@ const TouchWhatYouHear = ({
                 navigate("/learn");
             }
         } else {
-            changeQuestion((prev) => prev + 1);
+            setCurrentQuestion((prev) => prev + 1);
         }
     };
 
@@ -116,7 +125,7 @@ const TouchWhatYouHear = ({
             answer.join(" ").toLowerCase() ==
             question.questionData.questionSentence.toLowerCase()
         ) {
-            dispatch(updateScore());
+            await dispatch(updateScore());
             {
                 isMistake ? await dispatch(deleteMistake(question._id)) : null;
             }
@@ -135,6 +144,10 @@ const TouchWhatYouHear = ({
             setIsAnswerTrue(false);
         }
     };
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     if (lifePoint == 0) {
         return <LifePointModal />;
@@ -215,7 +228,7 @@ const TouchWhatYouHear = ({
             {!isAnswerFalse && !isAnswerTrue && (
                 <div className=" flex justify-between mt-auto  items-center mb-2">
                     <button
-                        onClick={() => changeQuestion((prev) => prev + 1)}
+                        onClick={() => setCurrentQuestion((prev) => prev + 1)}
                         disabled={questionIndex == questionLength - 1}
                         className="px-7 py-3 border-2 disabled:cursor-not-allowed border-dark-border text-dark-border font-bold rounded-xl hover:bg-dark-border hover:text-dark-bg-hover transition"
                     >

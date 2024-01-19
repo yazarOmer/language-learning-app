@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createUnit } from "../../features/unit/unitSlice.js";
+import { createUnit, resetUnit } from "../../features/unit/unitSlice.js";
 import {
     getAllSections,
     resetSection,
 } from "../../features/section/sectionSlice.js";
 import Loading from "../../components/Loading.jsx";
+import { toast } from "react-toastify";
 
 const AddUnit = () => {
     const [sectionId, setSectionId] = useState("");
@@ -16,18 +17,19 @@ const AddUnit = () => {
     const [color, setColor] = useState("");
 
     const { isLoading, sections } = useSelector((state) => state.section);
+    const { isSuccess, isError } = useSelector((state) => state.unit);
 
     const dispatch = useDispatch();
 
     const colors = [
-        "#2a9d8f",
-        "#e9c46a",
-        "#f4a261",
-        "#e76f51",
-        "#a8dadc",
-        "#457b9d",
-        "#edf6f9",
-        "#e29578",
+        "#58cc02",
+        "#ce82ff",
+        "#00cd9c",
+        "#1cb0f6",
+        "#ff86d0",
+        "#cc348d",
+        "#ff9600",
+        "#ce82ff",
     ];
 
     const fetchSections = async () => {
@@ -39,13 +41,24 @@ const AddUnit = () => {
         fetchSections();
     }, []);
 
-    const submitHandler = () => {
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success("Bölüm başarıyla eklendi");
+            setSectionId("");
+            setName("");
+            setGuide([{ eng: "", tr: "", id: Math.random() }]);
+            setColor("");
+        }
+        if (isError) {
+            toast.error("Bölüm eklenemedi");
+        }
+    }, [isSuccess, isError]);
+
+    const submitHandler = async () => {
         const data = { sectionId, name, guide, color };
-        dispatch(createUnit(data));
-        setSectionId("");
-        setName("");
-        setGuide([{ eng: "", tr: "", id: Math.random() }]);
-        setColor("");
+        await dispatch(createUnit(data));
+
+        await dispatch(resetUnit());
     };
 
     const handleInputChange = (id, event) => {

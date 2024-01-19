@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllUnits, resetUnit } from "../../features/unit/unitSlice";
 import Loading from "../../components/Loading.jsx";
 import { createQuiz, resetQuiz } from "../../features/quiz/quizSlice.js";
+import { toast } from "react-toastify";
 
 const AddQuiz = () => {
     const [sectionId, setSectionId] = useState("");
@@ -11,6 +12,7 @@ const AddQuiz = () => {
 
     const { isLoading, sections } = useSelector((state) => state.section);
     const { units } = useSelector((state) => state.unit);
+    const { isSuccess, isError } = useSelector((state) => state.quiz);
 
     const data = { sectionId, unitId, title };
 
@@ -22,6 +24,15 @@ const AddQuiz = () => {
             dispatch(resetUnit());
         }
     }, [sectionId]);
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success("Ders başarıyla eklendi");
+        }
+        if (isError) {
+            toast.error("Ders eklenemedi");
+        }
+    }, [isSuccess, isError]);
 
     const submitHandler = async () => {
         await dispatch(createQuiz(data));

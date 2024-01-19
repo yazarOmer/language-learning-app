@@ -6,26 +6,20 @@ import WriteMissingWord from "../components/WriteMissingWord";
 import ProgressBar from "../components/ProgressBar";
 import TouchWhatYouHear from "../components/TouchWhatYouHear";
 import WriteThisInTurkish from "../components/WriteThisInTurkish";
+import Loading from "../components/Loading";
 
 const Lesson = () => {
-    const { id } = useParams();
-
     const dispatch = useDispatch();
 
-    const fetchQuiz = async (id) => {
-        await dispatch(getQuiz(id));
-        await dispatch(resetQuiz());
-    };
-
     const { questions } = useSelector((state) => state.quiz.selectedQuiz);
+    const { isLoading } = useSelector((state) => state.quiz);
     const { lifePoint } = useSelector((state) => state.actions);
 
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [score, setScore] = useState(0);
 
-    useEffect(() => {
-        fetchQuiz(id);
-    }, [id]);
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <div className="w-2/4 mx-auto  h-screen flex flex-col">
@@ -58,33 +52,30 @@ const Lesson = () => {
             {(questions[currentQuestion].questionType == "writeMissingWord" && (
                 <WriteMissingWord
                     question={questions[currentQuestion]}
-                    changeQuestion={setCurrentQuestion}
                     questionIndex={currentQuestion}
                     questionLength={questions.length}
-                    score={score}
-                    setScore={setScore}
+                    isMistake={false}
+                    setCurrentQuestion={setCurrentQuestion}
                 />
             )) ||
                 (questions[currentQuestion].questionType ==
                     "touchWhatYouHear" && (
                     <TouchWhatYouHear
                         question={questions[currentQuestion]}
-                        changeQuestion={setCurrentQuestion}
                         questionIndex={currentQuestion}
                         questionLength={questions.length}
-                        score={score}
-                        setScore={setScore}
+                        isMistake={false}
+                        setCurrentQuestion={setCurrentQuestion}
                     />
                 )) ||
                 (questions[currentQuestion].questionType ==
                     "writeThisInTurkish" && (
                     <WriteThisInTurkish
                         question={questions[currentQuestion]}
-                        changeQuestion={setCurrentQuestion}
                         questionIndex={currentQuestion}
                         questionLength={questions.length}
-                        score={score}
-                        setScore={setScore}
+                        isMistake={false}
+                        setCurrentQuestion={setCurrentQuestion}
                     />
                 ))}
         </div>

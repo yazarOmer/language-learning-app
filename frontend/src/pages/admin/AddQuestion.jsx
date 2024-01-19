@@ -8,6 +8,7 @@ import {
     resetQuiz,
 } from "../../features/quiz/quizSlice.js";
 import QuestionInput from "../../components/QuestionInput.jsx";
+import { toast } from "react-toastify";
 
 const AddQuestion = () => {
     const [sectionId, setSectionId] = useState("");
@@ -18,20 +19,28 @@ const AddQuestion = () => {
     const [words, setWords] = useState([]);
     const [correctWord, setCorrectWord] = useState("");
 
-    const { isLoading, sections } = useSelector((state) => state.section);
+    const { isLoading, isError, sections } = useSelector(
+        (state) => state.section
+    );
     const { units } = useSelector((state) => state.unit);
     const { quizzes } = useSelector((state) => state.quiz);
 
     let data = { quizId, questionType, correctWord, questionSentence, words };
 
     const submitHandler = async () => {
-        console.log(data);
         dispatch(appendQuestion(data));
+        if (isLoading) {
+            toast.success("Soru başarıyla eklendi");
+        }
+        if (isError) {
+            toast.error("Soru eklenemedi");
+        }
         dispatch(resetQuiz());
         setSectionId("");
         setUnitId("");
         setQuizId("");
         setQuestionType("");
+        setCorrectWord("");
         setQestionSentence("");
         setWords([]);
     };

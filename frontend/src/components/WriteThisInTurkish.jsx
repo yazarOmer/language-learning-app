@@ -9,18 +9,23 @@ import {
     appendMistake,
     deleteMistake,
 } from "../features/actions/actionsSlice";
+import { increaseCurrentQuestion } from "../features/quiz/quizSlice";
 import LifePointModal from "./LifePointModal";
 import { toast } from "react-toastify";
 
 const WriteThisInTurkish = ({
     question,
-    changeQuestion,
     questionIndex,
     questionLength,
     isMistake,
+    setCurrentQuestion,
 }) => {
+    const { questions } = useSelector((state) => state.quiz.selectedQuiz);
+
     const [answer, setAnswer] = useState([]);
-    const [words, setWords] = useState([...question.questionData.words]);
+    const [words, setWords] = useState([
+        ...(questions[questionIndex].questionData.words || null),
+    ]);
     const [isAnswerTrue, setIsAnswerTrue] = useState(false);
     const [isAnswerFalse, setIsAnswerFalse] = useState(false);
 
@@ -70,8 +75,16 @@ const WriteThisInTurkish = ({
             synth.removeEventListener("voiceschanged", () => {
                 setVoice(voices[4]);
             });
+            setAnswer([]);
+            setWords(
+                questions[questionIndex + 1]?.questionData?.words
+                    ? [...questions[questionIndex + 1].questionData.words]
+                    : []
+            );
+            setIsAnswerFalse(false);
+            setIsAnswerTrue(false);
         };
-    }, [question.questionData.questionSentence]);
+    }, [question]);
 
     const addAnswer = (word, i) => {
         setAnswer((prev) => [...prev, word]);
@@ -97,7 +110,7 @@ const WriteThisInTurkish = ({
                 navigate("/learn");
             }
         } else {
-            changeQuestion((prev) => prev + 1);
+            setCurrentQuestion((prev) => prev + 1);
         }
     };
 
@@ -203,7 +216,7 @@ const WriteThisInTurkish = ({
             {!isAnswerFalse && !isAnswerTrue && (
                 <div className=" flex justify-between mt-auto  items-center mb-2">
                     <button
-                        onClick={() => changeQuestion((prev) => prev + 1)}
+                        onClick={() => dispatch(increaseCurrentQuestion())}
                         disabled={questionIndex == questionLength - 1}
                         className="px-7 py-3 border-2 disabled:cursor-not-allowed border-dark-border text-dark-border font-bold rounded-xl hover:bg-dark-border hover:text-dark-bg-hover transition"
                     >
