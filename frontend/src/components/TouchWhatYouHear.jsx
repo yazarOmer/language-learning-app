@@ -10,6 +10,7 @@ import {
     deleteMistake,
 } from "../features/actions/actionsSlice";
 import LifePointModal from "./LifePointModal";
+import { toast } from "react-toastify";
 
 const TouchWhatYouHear = ({
     question,
@@ -97,6 +98,7 @@ const TouchWhatYouHear = ({
             questionIndex == questionLength - 1 ||
             (isMistake && mistakes.length == 0)
         ) {
+            toast.info("Ders bitti");
             await dispatch(updateUserPoint({ score: currentScore }));
             await dispatch(resetActions());
             if (isMistake) {

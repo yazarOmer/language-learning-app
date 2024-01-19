@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { register, resetAuth } from "../features/auth/authSlice.js";
 import Loading from "../components/Loading.jsx";
+import { toast } from "react-toastify";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -22,21 +23,26 @@ const Register = () => {
     );
 
     useEffect(() => {
+        if (isError) {
+            toast.error("Kullanıcı kaydı yapılamadı");
+        }
+
         if (isSuccess || user) {
+            toast.success("Kullanıcı kaydı başarılı");
             navigate("/learn");
         }
 
         dispatch(resetAuth());
-    }, [isSuccess, user]);
+    }, [isSuccess, user, isError]);
 
     const onChangeHandler = (e) => {
         setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-    const submitHandler = () => {
+    const submitHandler = async () => {
         const userData = { name, email, password };
 
-        dispatch(register(userData));
+        await dispatch(register(userData));
     };
 
     if (isLoading) {

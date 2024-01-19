@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { getMistakes, resetActions } from "../features/actions/actionsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const Practice = () => {
     const dispatch = useDispatch();
@@ -11,7 +12,7 @@ const Practice = () => {
 
     const buttonHandle = async () => {
         if (lifePoint == 0) {
-            console.log("can yok");
+            toast.error("Derse başlamak için yeterli canın yok");
         } else {
             await dispatch(getMistakes());
             await dispatch(resetActions());

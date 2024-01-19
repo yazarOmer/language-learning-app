@@ -15,7 +15,6 @@ const Profile = () => {
         fetchProfile();
     }, []);
 
-    // const user = JSON.parse(localStorage.getItem("user"));
     const { user } = useSelector((state) => state.auth);
 
     const date = new Date(user.createdAt).toLocaleDateString();

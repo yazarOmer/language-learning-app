@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getQuiz, resetQuiz } from "../features/quiz/quizSlice";
+import { toast } from "react-toastify";
 
 const QuizButton = ({ quiz, order, color }) => {
     const [showCard, setShowCard] = useState(false);
@@ -12,7 +13,7 @@ const QuizButton = ({ quiz, order, color }) => {
 
     const buttonHandle = async (id) => {
         if (lifePoint == 0) {
-            console.log("can yok");
+            toast.error("Derse başlamak için yeterli canın yok");
         } else {
             await dispatch(getQuiz(id));
             await dispatch(resetQuiz());

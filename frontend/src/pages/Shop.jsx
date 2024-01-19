@@ -1,13 +1,21 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { buyLifePoint, resetActions } from "../features/actions/actionsSlice";
+import { toast } from "react-toastify";
 
 const Shop = () => {
     const dispatch = useDispatch();
 
+    const { gem } = useSelector((state) => state.actions);
+
     const buyItem = async () => {
-        await dispatch(buyLifePoint());
-        await dispatch(resetActions());
+        if (gem < 10) {
+            toast.error("Satın almak için yeterli elmasın yok");
+            return;
+        } else {
+            await dispatch(buyLifePoint());
+            await dispatch(resetActions());
+        }
     };
 
     return (

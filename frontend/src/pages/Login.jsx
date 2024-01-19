@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, resetAuth } from "../features/auth/authSlice.js";
 import Loading from "../components/Loading.jsx";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -17,21 +18,25 @@ const Login = () => {
     );
 
     useEffect(() => {
+        if (isError) {
+            toast.error("Kullanıcı bilgisi bulunamadı");
+        }
         if (isSuccess || user) {
+            toast.success("Kullanıcı girişi başarılı");
             navigate("/sections");
         }
 
         dispatch(resetAuth());
-    }, [isSuccess, user]);
+    }, [isSuccess, user, isError]);
 
     const onChangeHandler = (e) => {
         setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-    const submitHandler = () => {
+    const submitHandler = async () => {
         const userData = { email, password };
 
-        dispatch(login(userData));
+        await dispatch(login(userData));
     };
 
     if (isLoading) {

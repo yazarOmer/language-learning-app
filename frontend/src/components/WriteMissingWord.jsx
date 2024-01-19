@@ -10,6 +10,7 @@ import {
 } from "../features/actions/actionsSlice";
 import { useNavigate } from "react-router-dom";
 import LifePointModal from "./LifePointModal";
+import { toast } from "react-toastify";
 
 const WriteMissingWord = ({
     question,
@@ -86,6 +87,7 @@ const WriteMissingWord = ({
             questionIndex == questionLength - 1 ||
             (isMistake && mistakes.length == 0)
         ) {
+            toast.info("Ders bitti");
             await dispatch(updateUserPoint({ score: currentScore }));
             await dispatch(resetActions());
             if (isMistake) {
