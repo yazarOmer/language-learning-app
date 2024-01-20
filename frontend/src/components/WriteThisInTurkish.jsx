@@ -100,7 +100,7 @@ const WriteThisInTurkish = ({
             questionIndex == questionLength - 1 ||
             (isMistake && mistakes.length == 0)
         ) {
-            toast.info("Ders bitti");
+            toast.info(`Ders bitti. Kazanılan puan ${currentScore}`);
             await dispatch(updateUserPoint({ score: currentScore }));
             await dispatch(resetActions());
             if (isMistake) {

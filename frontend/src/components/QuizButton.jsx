@@ -27,7 +27,7 @@ const QuizButton = ({ quiz, order, color }) => {
                 onClick={() => setShowCard((prev) => !prev)}
                 className={`w-[75px] h-[75px] my-2 bg-[${color}]  rounded-full flex items-center justify-center font-bold text-dark-text-white text-lg`}
             >
-                {order}
+                {order + 1}
             </button>
             {showCard && (
                 <div

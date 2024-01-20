@@ -85,7 +85,11 @@ const TouchWhatYouHear = ({
                 setVoice(voices[4]);
             });
             setAnswer([]);
-            setWords([...questions[questionIndex + 1].questionData.words]);
+            setWords(
+                questions[questionIndex + 1]?.questionData?.words
+                    ? [...questions[questionIndex + 1].questionData.words]
+                    : []
+            );
             setIsAnswerFalse(false);
             setIsAnswerTrue(false);
         };
@@ -106,7 +110,7 @@ const TouchWhatYouHear = ({
             questionIndex == questionLength - 1 ||
             (isMistake && mistakes.length == 0)
         ) {
-            toast.info("Ders bitti");
+            toast.info(`Ders bitti. Kazanılan puan ${currentScore}`);
             await dispatch(updateUserPoint({ score: currentScore }));
             await dispatch(resetActions());
             if (isMistake) {

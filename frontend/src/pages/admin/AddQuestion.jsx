@@ -36,9 +36,9 @@ const AddQuestion = () => {
             toast.error("Soru eklenemedi");
         }
         dispatch(resetQuiz());
-        setSectionId("");
-        setUnitId("");
-        setQuizId("");
+        // setSectionId("");
+        // setUnitId("");
+        // setQuizId("");
         setQuestionType("");
         setCorrectWord("");
         setQestionSentence("");
