@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 export default {
     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
@@ -12,6 +13,9 @@ export default {
                 "active-border": "#3f85a7",
                 "light-blue": "#49c0f8",
             },
+        },
+        fontFamily: {
+            poppins: ["Poppins", "sans-serif"],
         },
     },
     safelist: [

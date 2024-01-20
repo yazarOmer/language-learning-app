@@ -8,7 +8,6 @@ import {
     appendMistake,
     deleteMistake,
 } from "../features/actions/actionsSlice";
-import { increaseCurrentQuestion } from "../features/quiz/quizSlice";
 import { useNavigate } from "react-router-dom";
 import LifePointModal from "./LifePointModal";
 import { toast } from "react-toastify";
@@ -204,7 +203,7 @@ const WriteMissingWord = ({
             {!isAnswerFalse && !isAnswerTrue && (
                 <div className=" flex justify-between mt-auto  items-center mb-2">
                     <button
-                        onClick={() => dispatch(increaseCurrentQuestion())}
+                        onClick={() => setCurrentQuestion((prev) => prev + 1)}
                         disabled={questionIndex == questionLength - 1}
                         className="px-7 py-3 border-2 disabled:cursor-not-allowed border-dark-border text-dark-border font-bold rounded-xl hover:bg-dark-border hover:text-dark-bg-hover transition"
                     >

@@ -9,7 +9,6 @@ import {
     appendMistake,
     deleteMistake,
 } from "../features/actions/actionsSlice";
-import { increaseCurrentQuestion } from "../features/quiz/quizSlice";
 import LifePointModal from "./LifePointModal";
 import { toast } from "react-toastify";
 import Loading from "./Loading";
