@@ -124,6 +124,8 @@ const WriteThisInTurkish = ({
                 isMistake ? await dispatch(deleteMistake(question._id)) : null;
             }
             setIsAnswerTrue(true);
+            let audio = new Audio("/correct.mp3");
+            audio.play();
             setIsAnswerFalse(false);
         } else {
             {
@@ -135,6 +137,8 @@ const WriteThisInTurkish = ({
             await dispatch(decreaseLifePoint());
             await dispatch(resetActions());
             setIsAnswerFalse(true);
+            let audio = new Audio("/wrong.mp3");
+            audio.play();
             setIsAnswerTrue(false);
         }
     };
@@ -203,7 +207,7 @@ const WriteThisInTurkish = ({
             {isAnswerFalse && (
                 <div className=" flex justify-between mt-auto bg-red-500 rounded-xl  items-center mb-2">
                     <p className="text-dark-text-white font-bold ml-3">
-                        YANLIŞ CEVAP
+                        YANLIŞ CEVAP {`(${question.questionData.correctWord})`}
                     </p>
                     <button
                         onClick={() => updatePoint()}
