@@ -13,9 +13,9 @@ export default {
                 "active-border": "#3f85a7",
                 "light-blue": "#49c0f8",
             },
-        },
-        fontFamily: {
-            poppins: ["Poppins", "sans-serif"],
+            fontFamily: {
+                poppins: ["Poppins", "sans-serif"],
+            },
         },
     },
     safelist: [

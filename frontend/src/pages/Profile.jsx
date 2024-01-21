@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile, resetActions } from "../features/actions/actionsSlice";
 import { updateUser, resetAuth } from "../features/auth/authSlice";
+import Loading from "../components/Loading";
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Profile = () => {
     }, []);
 
     const { user } = useSelector((state) => state.auth);
+    const { isLoading } = useSelector((state) => state.actions);
 
     const date = new Date(user.createdAt).toLocaleDateString();
 
@@ -27,6 +29,10 @@ const Profile = () => {
         await dispatch(resetAuth());
         fetchProfile();
     };
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <div className="flex-1 items-center mx-auto mt-10 flex flex-col gap-3">
