@@ -43,14 +43,14 @@ const AddUnit = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            toast.success("Bölüm başarıyla eklendi");
+            toast.success("Ünite başarıyla eklendi");
             setSectionId("");
             setName("");
             setGuide([{ eng: "", tr: "", id: Math.random() }]);
             setColor("");
         }
         if (isError) {
-            toast.error("Bölüm eklenemedi");
+            toast.error("Ünite eklenemedi");
         }
     }, [isSuccess, isError]);
 

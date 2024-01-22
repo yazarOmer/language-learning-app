@@ -94,7 +94,7 @@ const Header = () => {
                     onClick={logoutHandler}
                 >
                     <img src="/navMenu/logout.svg" className="w-7 h-7" alt="" />
-                    logout
+                    Çıkış yap
                 </button>
             </nav>
         </header>

@@ -5,7 +5,7 @@
 
 @layer components {
     body {
-        @apply bg-dark-bg box-border font-poppins;
+        @apply bg-dark-bg box-border;
     }
     .btn {
         @apply inline-flex items-center justify-center rounded-md text-base  transition-colors   border-2 mb-2 h-11 w-full font-bold;
