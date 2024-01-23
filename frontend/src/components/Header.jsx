@@ -57,6 +57,12 @@ const Header = () => {
             to: "/admin/question",
             id: 10,
         },
+        {
+            title: "Dinleme Dersi Ekle",
+            logo: "/navMenu/unit.svg",
+            to: "/admin/listening",
+            id: 11,
+        },
     ];
 
     const logoutHandler = async () => {

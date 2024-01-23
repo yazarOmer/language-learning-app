@@ -30,7 +30,10 @@ const Leaderboard = () => {
                     Puan Tablosu
                 </h1>
                 {leaderboard.map((user, i) => (
-                    <div className="w-[500px] flex py-3 mb-2 rounded-2xl border border-dark-text-white/75 hover:bg-dark-border/75 items-center justify-between">
+                    <div
+                        key={user._id}
+                        className="w-[500px] flex py-3 mb-2 rounded-2xl border border-dark-text-white/75 hover:bg-dark-border/75 items-center justify-between"
+                    >
                         <div className="flex items-center gap-5">
                             <span className="text-lg text-dark-text-white font-bold ml-5">
                                 {i + 1}

@@ -26,6 +26,8 @@ import AddQuestion from "./pages/admin/AddQuestion.jsx";
 import AdminRoute from "./components/AdminRoute.jsx";
 import Mistakes from "./pages/Mistakes.jsx";
 import { ToastContainer } from "react-toastify";
+import AddListening from "./pages/admin/AddListening.jsx";
+import Listening from "./pages/Listening.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <Provider store={store}>
@@ -51,8 +53,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                     <Route path="/admin/unit" element={<AddUnit />} />
                     <Route path="/admin/quiz" element={<AddQuiz />} />
                     <Route path="/admin/question" element={<AddQuestion />} />
+                    <Route path="/admin/listening" element={<AddListening />} />
                 </Route>
                 <Route path="/mistakes" element={<Mistakes />} />
+                <Route path="/listening" element={<Listening />} />
                 <Route path={`/lesson/:id`} element={<Lesson />} />
             </Routes>
         </BrowserRouter>

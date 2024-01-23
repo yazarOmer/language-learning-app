@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import sectionRoutes from "./routes/sectionRoutes.js";
 import unitRoutes from "./routes/unitRoutes.js";
 import quizRoutes from "./routes/quizRoutes.js";
+import listeningRoutes from "./routes/listeningRoutes.js";
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 import connectDB from "./config/db.js";
 const port = process.env.PORT || 5000;
@@ -24,6 +25,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/sections", sectionRoutes);
 app.use("/api/units", unitRoutes);
 app.use("/api/quizzes", quizRoutes);
+app.use("/api/listenings", listeningRoutes);
 
 app.get("/", (req, res) => res.send("Server is ready"));
 

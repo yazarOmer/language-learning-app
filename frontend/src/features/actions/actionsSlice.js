@@ -8,6 +8,7 @@ const initialState = {
     gem: user ? user.gem : 50,
     currentScore: 0,
     mistakes: [],
+    listenings: [],
     leaderboard: [],
     isError: false,
     isSuccess: false,
@@ -56,6 +57,60 @@ export const appendMistake = createAsyncThunk(
     async (data, thunkAPI) => {
         try {
             return await actionsApi.appendMistake(data);
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
+export const createListening = createAsyncThunk(
+    "actions/createListening",
+    async (questionData, thunkAPI) => {
+        try {
+            return await actionsApi.createListening(questionData);
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
+export const getAllListenings = createAsyncThunk(
+    "actions/getAllListenings",
+    async (_, thunkAPI) => {
+        try {
+            return await actionsApi.getAllListenings();
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
+export const getListeningQuiz = createAsyncThunk(
+    "actions/getListeningQuiz",
+    async (_, thunkAPI) => {
+        try {
+            return await actionsApi.getListeningQuiz();
         } catch (error) {
             const message =
                 (error.response &&
@@ -312,6 +367,44 @@ export const actionsSlice = createSlice({
                 state.isSuccess = true;
             })
             .addCase(appendMistake.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(createListening.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(createListening.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+            })
+            .addCase(createListening.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(getAllListenings.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getAllListenings.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.listenings = action.payload;
+            })
+            .addCase(getAllListenings.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(getListeningQuiz.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getListeningQuiz.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.listenings = action.payload;
+            })
+            .addCase(getListeningQuiz.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;

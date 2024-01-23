@@ -77,6 +77,32 @@ const deleteMistake = async (questionId) => {
     }
 };
 
+const createListening = async (questionData) => {
+    const response = await axios.post("/api/listenings/create", {
+        questionData,
+    });
+
+    if (response.data) {
+        return response.data;
+    }
+};
+
+const getAllListenings = async () => {
+    const response = await axios.get("/api/listenings/all");
+
+    if (response.data) {
+        return response.data;
+    }
+};
+
+const getListeningQuiz = async () => {
+    const response = await axios.get("/api/listenings/");
+
+    if (response.data) {
+        return response.data;
+    }
+};
+
 const actionsApi = {
     decreaseLifePoint,
     getUserStats,
@@ -87,6 +113,9 @@ const actionsApi = {
     appendMistake,
     getMistakes,
     deleteMistake,
+    createListening,
+    getAllListenings,
+    getListeningQuiz,
 };
 
 export default actionsApi;
