@@ -60,7 +60,7 @@ const Practice = () => {
                     Dinleme Çalışması
                 </h1>
                 <p className="text-dark-border group-hover:text-dark-text-white">
-                    Daha zor dinleme çalışmalarıyla yüzleş
+                    Daha zor dinleme çalışmalarına meydan oku
                 </p>
             </button>
         </div>
